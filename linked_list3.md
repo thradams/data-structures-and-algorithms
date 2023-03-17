@@ -6,7 +6,6 @@
 
 struct book {
     char title[10];
-    struct book* next;
 };
 
 struct book_list_node {

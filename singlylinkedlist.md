@@ -1,8 +1,5 @@
 # Singly Linked List
 
-### Intrusive
-
-The object *book* knows he is used in a linked list because it has "next".
 
 ```c
 struct book  {
@@ -15,26 +12,35 @@ struct book_list {
 };
 ```
 
-### Non intrusive
+```c
+struct book  {
+  char title[10];
+};
 
-The object *book* does not knows he is used inside a linked list.
+struct book_list_node {
+  struct book data;
+  struct book_list_node* next;
+};
+
+struct book_list {
+  struct book_list_node * head,  *tail;
+};
+```
+
 
 ```c
 struct book  {
   char title[10];
 };
 
-struct book_node {
-  struct book * data;
-  //or
-  struct book data;
-  struct book_node* next;
+struct book_list_node {
+  struct book* data;
+  struct book_list_node* next;
 };
 
 struct book_list {
-  struct book_node * head,  *tail;
+  struct book_list_node * head,  *tail;
 };
 ```
-
 
 

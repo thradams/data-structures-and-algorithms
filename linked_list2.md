@@ -4,8 +4,7 @@
 
 
 struct book {
-    char title[10];
-    struct book* next;
+    char title[10];  
 };
 
 struct book_list {
@@ -20,7 +19,7 @@ void book_list_append(struct book_list* list, struct book* b)
     struct book_list_node* node = calloc(1, sizeof(struct book_list_node));
     if (node == NULL) return;
 
-    node->data = *b;
+    node->data = *b; /*MOVED*/
     
     if (list->head == NULL) {
         list->head = node;

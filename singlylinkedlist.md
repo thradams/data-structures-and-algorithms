@@ -4,6 +4,8 @@
 
 Intrusive
 
+The object *book* knows he is used in a linked list because it has "next".
+
 ```c
 struct book  {
   char title[10];
@@ -16,6 +18,8 @@ struct book_list {
 ```
 
 Non intrusive
+
+The object *book* does not knows he is used inside a linked list.
 
 ```c
 struct book  {

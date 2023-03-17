@@ -20,14 +20,16 @@ struct book {
     struct book* next;
 };
 
+struct book_list_node {
+   struct book data;
+   struct book_list_node* next;
+};
+
 struct book_list {
-    struct book_list_node {
-        struct book data;
-        struct book_list_node* next;
-    } *head, * tail;
+     struct book_list_node *head, * tail;
 };
 ```
-[source → ](linked_lists2.md)
+[source → ](linked_list2.md)
 
 ```c
 struct book  {

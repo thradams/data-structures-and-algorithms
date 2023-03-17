@@ -1,5 +1,5 @@
 
-[Home](readme.md)
+[Home](README.md)
 
 # Linked list
 

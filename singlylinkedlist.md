@@ -23,12 +23,16 @@ struct book  {
 };
 
 struct book_node {
-  struct book * next;
+  struct book * data;
+  //or
+  struct book data;
+  struct book_node* next;
 };
 
 struct book_list {
-  struct book * head,  *tail;
+  struct book_node * head,  *tail;
 };
 ```
+
 
 

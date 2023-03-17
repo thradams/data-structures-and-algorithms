@@ -31,18 +31,19 @@ struct book_list {
 [source → ](linked_list2.md)
 
 ```c
-struct book  {
-  char title[10];
+
+struct book {
+    char title[10];
 };
 
 struct book_list_node {
-  struct book* data;
-  struct book_list_node* next;
+   struct book* data;
+   struct book_list_node* next;
 };
 
 struct book_list {
-  struct book_list_node * head,  *tail;
+     struct book_list_node *head, * tail;
 };
 ```
-
+[source → ](linked_list3.md)
 

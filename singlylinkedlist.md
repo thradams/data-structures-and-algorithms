@@ -1,8 +1,6 @@
 # Singly Linked List
 
-## Head and Tail
-
-Intrusive
+### Intrusive
 
 The object *book* knows he is used in a linked list because it has "next".
 
@@ -17,7 +15,7 @@ struct book_list {
 };
 ```
 
-Non intrusive
+### Non intrusive
 
 The object *book* does not knows he is used inside a linked list.
 

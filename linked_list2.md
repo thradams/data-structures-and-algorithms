@@ -1,19 +1,20 @@
 ```c
 #include <stdlib.h>
 #include <assert.h>
-
+#include <string.h>
+#include <stdio.h>
 
 struct book {
-    char title[10];  
+    char title[10];
 };
 
 struct book_list_node {
-   struct book data;
-   struct book_list_node* next;
+    struct book data;
+    struct book_list_node* next;
 };
-    
+
 struct book_list {
-  struct book_list_node *head, *tail;
+    struct book_list_node* head, * tail;
 };
 
 void book_list_append(struct book_list* list, struct book* b)
@@ -22,7 +23,7 @@ void book_list_append(struct book_list* list, struct book* b)
     if (node == NULL) return;
 
     node->data = *b; /*MOVED*/
-    
+
     if (list->head == NULL) {
         list->head = node;
         list->tail = node;
@@ -32,6 +33,24 @@ void book_list_append(struct book_list* list, struct book* b)
         list->tail = node;
     }
 }
+
+void book_list_append_title(struct book_list* list, const char* title)
+{
+    struct book_list_node* node = calloc(1, sizeof(struct book_list_node));
+    if (node == NULL) return;
+
+    snprintf(node->data.title, sizeof node->data.title, "%s", title);
+
+    if (list->head == NULL) {
+        list->head = node;
+        list->tail = node;
+    }
+    else {
+        list->tail->next = node;
+        list->tail = node;
+    }
+}
+
 
 void book_list_destroy(struct book_list* list)
 {
@@ -47,9 +66,11 @@ void book_list_destroy(struct book_list* list)
 int main(int argc, char* argv[])
 {
     struct book_list list = { 0 };
-    struct book book = { .title = "book1"};
+    struct book book = { .title = "book1" };
     book_list_append(&list, &book);
+
+    book_list_append_title(&list, "title");
+
     book_list_destroy(&list);
 }
-
 ```

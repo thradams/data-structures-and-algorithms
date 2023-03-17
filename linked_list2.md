@@ -7,11 +7,13 @@ struct book {
     char title[10];  
 };
 
+struct book_list_node {
+   struct book data;
+   struct book_list_node* next;
+};
+    
 struct book_list {
-    struct book_list_node {
-        struct book data;
-        struct book_list_node* next;
-    } *head, * tail;
+  struct book_list_node *head, *tail;
 };
 
 void book_list_append(struct book_list* list, struct book* b)

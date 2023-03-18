@@ -11,7 +11,7 @@ struct book  {
 };
 
 struct book_list {
-  struct book * head,  *tail;
+  struct book *head, *tail;
 };
 ```
 [source → ](linked_lists1.md)

@@ -13,6 +13,11 @@ struct int_array {
 int int_array_reserve(struct int_array* p, int n)
 {
     if (n > p->capacity) {
+    
+        // n * sizeof(p->data[0]) does not overflow considering
+        _Static_assert(sizeof(p->data[0]) < INT_MAX, "");
+        _Static_assert(INT_MAX * INT_MAX < SIZE_MAX, "");
+
         void* pnew = realloc(p->data, n * sizeof(p->data[0]));
         if (pnew)
         {

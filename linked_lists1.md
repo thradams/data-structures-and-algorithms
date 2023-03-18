@@ -1,4 +1,4 @@
-🠄 [Single linked list](inked_lists.md)
+🠄 [Single linked list](linked_lists.md)
 
 ```c
 #include <stdlib.h>

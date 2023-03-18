@@ -13,12 +13,6 @@ struct int_array {
 int int_array_reserve(struct int_array* p, int n)
 {
     if (n > p->capacity) {
-        
-        if (n > (INT_MAX / sizeof(p->data[0])))
-        {
-           return 0; /*overflow because n * sizeof(p->data[0]) will be  bigger than INT_MAX*/
-        }
-        
         void* pnew = realloc(p->data, n * sizeof(p->data[0]));
         if (pnew)
         {
@@ -40,8 +34,6 @@ int int_array_push(struct int_array* p, int value)
        /*after this point is overflow*/
        return 0;
     }
-    
-    
     
     if (p->size + 1 > p->capacity) {
     

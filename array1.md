@@ -36,7 +36,20 @@ int int_array_reserve(struct int_array* p, int n)
 
 int int_array_push(struct int_array* p, int value)
 {
+    if (p->size == INT_MAX) {
+       /*after this point is overflow*/
+       return 0;
+    }
+    
+    
+    
     if (p->size + 1 > p->capacity) {
+    
+       if (p->capacity > INT_MAX / 2 ) {
+          /*after this point is overflow*/
+          return 0;
+       }
+    
         int n = p->capacity * 2;
         if (n == 0) {
             n = 1;

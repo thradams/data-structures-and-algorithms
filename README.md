@@ -4,7 +4,7 @@
 
 * [Linked lists](linked_lists.md)
 * [Dynamic arrays](dynamic_arrays.md)
-* [Hash map](hashmaps.md)
+* [Hash maps](hashmaps.md)
 
 ## Algoritms
 

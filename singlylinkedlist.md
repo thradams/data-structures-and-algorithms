@@ -1,3 +1,6 @@
+🠄 [Home](linked_lists.md)
+
+
 # Singly Linked List
 
 

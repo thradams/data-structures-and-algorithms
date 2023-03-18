@@ -1,4 +1,4 @@
-🠄 [Home](linked_lists.md)
+🠄 [Linked lists](linked_lists.md)
 
 
 # Singly Linked List

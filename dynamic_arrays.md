@@ -10,4 +10,7 @@ struct items {
   int capacity;
 }
 ```
+[source → ](array.md)
+
+
 

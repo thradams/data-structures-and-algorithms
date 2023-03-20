@@ -1,5 +1,11 @@
 🠄 [Single linked list](linked_lists.md)
 
+* Insertion never fails
+* Element allocation on the caller side
+* Intrusive (because type book knows he has "next")
+* No need for "book_destroy" (Otherwise we would need to call book_destroy on book_list_destroy)
+* 
+
 ```c
 #include <stdlib.h>
 #include <assert.h>

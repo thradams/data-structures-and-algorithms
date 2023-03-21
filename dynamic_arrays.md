@@ -3,7 +3,7 @@
 
 # Dynamic arrays
 
-Sample 1 - dynamic arrays of ints
+Sample 1
 
 * [ ] item is a reference
 * [ ] item is a owned  reference
@@ -20,8 +20,7 @@ struct items {
 ```
 [source → ](array1.md)
 
-Sample 2 - dynamic arrays of books. book is copied.
-
+Sample 2
 
 * [ ] item is a reference
 * [ ] item is a owned  reference
@@ -43,8 +42,7 @@ struct books {
 ```
 [source → ](array2.md)
 
-Sample 3 - dynamic arrays of books. book is moved into the array.
-
+Sample 3
 
 * [ ] item is a reference
 * [ ] item is a owned  reference
@@ -69,7 +67,7 @@ struct books {
 [source → ](array3.md)
 
 
-Sample 4 - dynamic arrays of onwer pointer of books. onwership transfered
+Sample 4 
 
 * [ ] item is a reference
 * [x] item is a owned  reference

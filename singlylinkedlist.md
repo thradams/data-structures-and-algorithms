@@ -49,7 +49,7 @@ struct book_list_node {
 };
 
 struct book_list {
-     struct book_list_node *head, * tail;
+     struct book_list_node *head, *tail;
 };
 ```
 [source → ](linked_list2.md)
@@ -66,7 +66,7 @@ struct book_list_node {
 };
 
 struct book_list {
-     struct book_list_node *head, * tail;
+     struct book_list_node *head, *tail;
 };
 ```
 [source → ](linked_list3.md)
@@ -83,7 +83,7 @@ struct book_list_node {
 };
 
 struct book_list {
-     struct book_list_node *head, * tail;
+     struct book_list_node *head, *tail;
 };
 ```
 [source → ](linked_list4.md)

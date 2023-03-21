@@ -3,9 +3,12 @@
 
 ```c
 /*
- * Sample 1
+ * Sample 1 
+ List of books where 
+  - book has "next" (intrusive)
+  - book does not need destructor
  */
- 
+
 #include <stdlib.h>
 #include <assert.h>
 
@@ -15,33 +18,33 @@ struct book {
     struct book* next;
 };
 
-struct book_list {
+struct books {
     struct book* head, *tail;
 };
 
-void book_list_append(struct book_list* list, struct book* book)
+void book_list_append(struct books* books, struct book* book)
 {
     //pre condition
-    assert(list != NULL);
+    assert(books != NULL);
     assert(book != NULL);
     assert(book->next == NULL);
 
-    if (list->head == NULL) {
-        list->head = book;
-        list->tail = book;
+    if (books->head == NULL) {
+        books->head = book;
+        books->tail = book;
     }
     else {
-        list->tail->next = book;
-        list->tail = book;
+        books->tail->next = book;
+        books->tail = book;
     }
 }
 
-void book_list_destroy(struct book_list* list)
+void book_list_destroy(struct books* books)
 {
     //pre condition
-    assert(list != NULL);
+    assert(books != NULL);
 
-    struct book* it = list->head;
+    struct book* it = books->head;
     while (it != NULL)
     {
         struct book* next = it->next;
@@ -52,7 +55,7 @@ void book_list_destroy(struct book_list* list)
 
 int main(int argc, char* argv[])
 {
-    struct book_list list = { 0 };
+    struct books list = { 0 };
     struct book* b1 = calloc(1, sizeof(struct book));
     if (b1)
     {

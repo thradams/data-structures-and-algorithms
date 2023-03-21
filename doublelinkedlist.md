@@ -42,8 +42,9 @@ struct book_list {
 
  ```c
 struct book {
-    char *title;
+    char * title;
     struct book* next;
+    struct book* prev;
 };
 
 void book_destroy(struct book* book) {

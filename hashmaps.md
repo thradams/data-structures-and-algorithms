@@ -1,8 +1,6 @@
 # Hash maps
 
+TODO
 
-["string"] -> struct item
-
-["string"] -> struct item*
 
 

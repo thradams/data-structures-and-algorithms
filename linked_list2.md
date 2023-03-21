@@ -1,11 +1,16 @@
 [Main](README.md) > [Linked lists](linked_lists.md) > [Singly Linked lists](singlylinkedlist.md) > Sample 3
 
 ```c
+/*
+* Sample 3
+*/
+
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
+#include <stdbool.h>
 
 struct book {
     char title[10];
@@ -16,14 +21,14 @@ struct book_list_node {
     struct book_list_node* next;
 };
 
-struct book_list {
-    struct book_list_node* head, * tail;
+struct books {
+    struct book_list_node* head, *tail;
 };
 
-int book_list_append(struct book_list* list, struct book* book)
+int books_append(struct books* books, struct book* book)
 {
     //pre condition
-    assert(list != NULL);
+    assert(books != NULL);
     assert(book != NULL);
 
     struct book_list_node* node = calloc(1, sizeof * node);
@@ -31,22 +36,22 @@ int book_list_append(struct book_list* list, struct book* book)
 
     node->book = *book;
 
-    if (list->head == NULL) {
-        list->head = node;
-        list->tail = node;
+    if (books->head == NULL) {
+        books->head = node;
+        books->tail = node;
     }
     else {
-        list->tail->next = node;
-        list->tail = node;
+        books->tail->next = node;
+        books->tail = node;
     }
     return 0;
 }
 
 /*alternative insert*/
-int book_list_append_title(struct book_list* list, const char* title)
+int books_append_title(struct books* books, const char* title)
 {
     //pre condition
-    assert(list != NULL);
+    assert(books != NULL);
     assert(title != NULL);
 
     struct book_list_node* node = calloc(1, sizeof(struct book_list_node));
@@ -58,24 +63,25 @@ int book_list_append_title(struct book_list* list, const char* title)
         return ERANGE; /*title too big*/
     }
 
-    if (list->head == NULL) {
-        list->head = node;
-        list->tail = node;
+    if (books->head == NULL) {
+        books->head = node;
+        books->tail = node;
     }
     else {
-        list->tail->next = node;
-        list->tail = node;
+        books->tail->next = node;
+        books->tail = node;
     }
+
     return 0;
 }
 
 
-void book_list_destroy(struct book_list* list)
+void book_list_destroy(struct books* books)
 {
     //pre condition
-    assert(list != NULL);
+    assert(books != NULL);
 
-    struct book_list_node* it = list->head;
+    struct book_list_node* it = books->head;
     while (it != NULL) {
         struct book_list_node* next = it->next;
         free(it);
@@ -86,15 +92,20 @@ void book_list_destroy(struct book_list* list)
 
 int main(int argc, char* argv[])
 {
-    struct book_list list = { 0 };
-    
+    struct books list = { 0 };
+
     struct book book = { .title = "book1" };
-    book_list_append(&list, &book /*COPIED*/);
+    if (books_append(&list, &book /*COPIED*/) != 0)
+    {
+        assert(false); //ops
+    }
 
     /*alternative insert*/
-    book_list_append_title(&list, "book 2");
+    if (books_append_title(&list, "book 2") != 0)
+    {
+        assert(false); //ops
+    }
 
     book_list_destroy(&list);
 }
-
 ```

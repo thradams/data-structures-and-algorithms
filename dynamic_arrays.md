@@ -3,18 +3,18 @@
 
 # Dynamic arrays
 
-Sample 1
+Sample 1 - dynamic arrays of ints
 
 ```c
 struct items {
-  int* data; /*array of ints*/
+  int* data;
   int  size;
   int  capacity;
 }
 ```
 [source → ](array1.md)
 
-Sample 2
+Sample 2 - dynamic arrays of books. book is copied.
 
 ```c
 struct book {
@@ -30,7 +30,8 @@ struct books {
 ```
 [source → ](array2.md)
 
-Sample 3
+Sample 3 - dynamic arrays of books. book is moved into the array.
+
 ```c
 struct book {
     char* title;
@@ -48,7 +49,8 @@ struct books {
 [source → ](array3.md)
 
 
-Sample 4
+Sample 4 - dynamic arrays of onwer pointer of books. onwership transfered
+
 ```c
 struct book {
     char* title;

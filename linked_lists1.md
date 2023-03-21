@@ -17,7 +17,9 @@ struct book_list {
 
 void book_list_append(struct book_list* list, struct book* book)
 {
+    //pre condition
     assert(book->next == NULL);
+    
     if (list->head == NULL) {
         list->head = book;
         list->tail = book;

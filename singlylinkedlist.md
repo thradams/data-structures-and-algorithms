@@ -49,13 +49,14 @@ struct book {
 };
 
 struct book_list_node {
-   struct book data;
-   struct book_list_node* next;
+    struct book book;
+    struct book_list_node* next;
 };
 
-struct book_list {
-     struct book_list_node *head, *tail;
+struct books {
+    struct book_list_node* head, *tail;
 };
+
 ```
 [source → ](linked_list2.md)
 

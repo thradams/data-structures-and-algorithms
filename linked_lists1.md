@@ -12,14 +12,16 @@ struct book {
 };
 
 struct book_list {
-    struct book* head, * tail;
+    struct book* head, *tail;
 };
 
 void book_list_append(struct book_list* list, struct book* book)
 {
     //pre condition
+    assert(list != NULL);
+    assert(book != NULL);
     assert(book->next == NULL);
-    
+
     if (list->head == NULL) {
         list->head = book;
         list->tail = book;
@@ -32,6 +34,9 @@ void book_list_append(struct book_list* list, struct book* book)
 
 void book_list_destroy(struct book_list* list)
 {
+    //pre condition
+    assert(list != NULL);
+
     struct book* it = list->head;
     while (it != NULL)
     {
@@ -40,7 +45,6 @@ void book_list_destroy(struct book_list* list)
         it = next;
     }
 }
-
 
 int main(int argc, char* argv[])
 {

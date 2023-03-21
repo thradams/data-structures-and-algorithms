@@ -6,7 +6,7 @@
 Sample 1 - dynamic arrays of ints
 
 * [ ] item is a reference
-* [ ] item is a onwned reference
+* [ ] item is a owned  reference
 * [x] item is copied
 * [ ] item is moved
 * [ ] item needs destructor
@@ -24,7 +24,7 @@ Sample 2 - dynamic arrays of books. book is copied.
 
 
 * [ ] item is a reference
-* [ ] item is a onwned reference
+* [ ] item is a owned  reference
 * [x] item is copied
 * [ ] item needs destructor
 
@@ -47,7 +47,7 @@ Sample 3 - dynamic arrays of books. book is moved into the array.
 
 
 * [ ] item is a reference
-* [ ] item is a onwned reference
+* [ ] item is a owned  reference
 * [ ] item is copied
 * [x] item is moved
 * [x] item needs destructor
@@ -72,7 +72,7 @@ struct books {
 Sample 4 - dynamic arrays of onwer pointer of books. onwership transfered
 
 * [ ] item is a reference
-* [x] item is a onwned reference
+* [x] item is a owned  reference
 * [ ] item is copied
 * [x] item is moved
 * [x] item needs destructor

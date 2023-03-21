@@ -1,6 +1,11 @@
-[Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 3
+[Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 3 - dynamic arrays of books. book is moved into the array
 
 ```c
+
+/*
+ * Sample 3 - dynamic arrays of books. book is moved into the array.
+*/
+
 #pragma once
 #include <stdlib.h>
 #include <assert.h>

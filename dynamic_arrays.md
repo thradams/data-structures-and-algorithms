@@ -15,15 +15,16 @@ struct items {
 
 
 ```c
-struct item {
-  int i;
+struct book {
+    char title[10];
 };
 
-struct items {
-  struct item* data;
-  int size;
-  int capacity;
-}
+struct books {
+    struct book* data;
+    int size;
+    int capacity;
+};
+
 ```
 [source → ](array2.md)
 

@@ -1,10 +1,5 @@
 🠄 [Single linked list](linked_lists.md)
 
-* Insertion never fails
-* Element allocation on the caller side
-* Intrusive (because type book knows he has "next")
-* No need for "book_destroy" (Otherwise we would need to call book_destroy on book_list_destroy)
-* 
 
 ```c
 #include <stdlib.h>
@@ -48,10 +43,12 @@ void book_list_destroy(struct book_list* list)
 int main(int argc, char* argv[])
 {
     struct book_list list = { 0 };
-    struct book *b1 = calloc(1, sizeof(struct book));
-    book_list_append(&list, b1);    
+    struct book* b1 = calloc(1, sizeof(struct book));
+    if (b1)
+    {
+        book_list_append(&list, b1);
+    }
     book_list_destroy(&list);
 }
-
 ```
 

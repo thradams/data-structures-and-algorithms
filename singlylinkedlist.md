@@ -6,9 +6,9 @@
 [x] singly linked list
 
 Sample 1
-[ ] list of pointers to book
-[ ] book needs destructor
-[x] intrusive
+* [ ] list of pointers to book
+* [ ] book needs destructor
+* [x] intrusive
 
 ```c
 struct book {

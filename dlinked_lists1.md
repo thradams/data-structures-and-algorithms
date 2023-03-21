@@ -1,4 +1,5 @@
 ```c
+
 /*
  * Sample 1
  */
@@ -17,94 +18,89 @@ struct books {
     struct book* head, *tail;
 };
 
-void insert_after(struct books* books, struct book* book, struct book* newNode)
+void books_insert_after(struct books* books, struct book* book, struct book* new_book)
 {
-    assert(newNode->prev == NULL);
-    assert(newNode->next == NULL);
+    assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
 
-    newNode->prev = book;
+    new_book->prev = book;
     if (book->next == NULL) {        
-        books->tail = newNode;
+        books->tail = new_book;
     }
     else {
-        newNode->next = book->next;
-        book->next->prev = newNode;
+        new_book->next = book->next;
+        book->next->prev = new_book;
     }
-    book->next = newNode;
+    book->next = new_book;
 }
 
-void insert_before(struct books* list, struct book* node, struct book* newNode)
+void books_insert_before(struct books* books, struct book* node, struct book* new_book)
 {
-    assert(newNode->prev == NULL);
-    assert(newNode->next == NULL);
+    assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
 
-    newNode->next = node;
-    if (node->prev == NULL)
+    new_book->next = node;
+    if (node->prev == NULL) {        
+        books->head = new_book;
+    }
+    else {
+        new_book->prev = node->prev;
+        node->prev->next = new_book;
+    }
+    node->prev = new_book;
+
+}
+
+void books_insert_beginning(struct books* books, struct book* new_book)
+{
+    assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
+
+    if (books->head == NULL)
     {
-        newNode->prev = NULL;// --(not always necessary)
-        list->head = newNode;
+        books->head = new_book;
+        books->tail = new_book;
     }
     else
     {
-        newNode->prev = node->prev;
-        node->prev->next = newNode;
-
+        new_book->next = books->head;
+        books->head = new_book;
+        books->head->prev = new_book;
     }
-    node->prev = newNode;
-
 }
 
-void insert_beginning(struct books* list, struct book* newNode)
+void insert_end(struct books* books, struct book* new_book)
 {
-    assert(newNode->prev == NULL);
-    assert(newNode->next == NULL);
+    assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
 
-    if (list->head == NULL)
+    if (books->tail == NULL)
     {
-        list->head = newNode;
-        list->tail = newNode;
+        books->head = new_book;
+        books->tail = new_book;
     }
     else
     {
-        newNode->next = list->head;
-        list->head = newNode;
-        list->head->prev = newNode;
+        new_book->prev = books->tail;
+        books->tail = new_book;
+        books->tail->next = new_book;
     }
 }
 
-void insert_end(struct books* list, struct book* newNode)
-{
-    assert(newNode->prev == NULL);
-    assert(newNode->next == NULL);
-
-    if (list->tail == NULL)
-    {
-        list->head = newNode;
-        list->tail = newNode;
-    }
-    else
-    {
-        newNode->prev = list->tail;
-        list->tail = newNode;
-        list->tail->next = newNode;
-    }
-}
-
-void remove_and_free(struct books* list, struct book* node)
+void books_remove_and_free(struct books* books, struct book* node)
 {
     if (node->prev == NULL)
-        list->head = node->next;
+        books->head = node->next;
     else
         node->prev->next = node->next;
 
     if (node->next == NULL)
-        list->tail = node->prev;
+        books->tail = node->prev;
     else
         node->next->prev = node->prev;
 
     free(node);
 }
-
 
 
 void books_destroy(struct books* books)
@@ -134,11 +130,11 @@ int main(int argc, char* argv[])
     {
         b1 = calloc(1, sizeof(struct book));
         if (b1 == NULL) throw;
-        insert_end(&list, b1);
+        insert_end(&list, b1 /*REF MOVED*/);
 
         b2 = calloc(1, sizeof(struct book));
         if (b2 == NULL) throw;
-        insert_end(&list, b2);
+        insert_end(&list, b2 /*REF MOVED*/);
     }
     catch {
     }
@@ -146,6 +142,5 @@ int main(int argc, char* argv[])
 
     books_destroy(&list);
 }
-
 ```
 

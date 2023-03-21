@@ -110,7 +110,7 @@ int main()
     struct book* book = NULL;
     try
     {
-        book = calloc(1, sizeof book);
+        book = calloc(1, sizeof(struct book));
         if (book == NULL) throw;        
         book->title = strdup("title 1");
         if (book->title == NULL) throw;

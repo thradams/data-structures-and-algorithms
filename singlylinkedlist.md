@@ -1,4 +1,4 @@
-🠄 [Linked lists](linked_lists.md)
+[Main](README.md) > [Linked lists](linked_lists.md) > Singly Linked lists
 
 
 # Singly Linked List

@@ -1,7 +1,6 @@
 [Main](README.md) > [Linked lists](linked_lists.md) > [Doubly Linked lists](doublelinkedlist.md) > Sample 1
 
 ```c
-
 /*
  * Sample 1
  */
@@ -53,7 +52,7 @@ void books_insert_before(struct books* books, struct book* node, struct book* ne
 
 }
 
-void books_insert_beginning(struct books* books, struct book* new_book)
+void books_push_front(struct books* books, struct book* new_book)
 {
     assert(new_book->prev == NULL);
     assert(new_book->next == NULL);
@@ -71,7 +70,7 @@ void books_insert_beginning(struct books* books, struct book* new_book)
     }
 }
 
-void insert_end(struct books* books, struct book* new_book)
+void books_push_back(struct books* books, struct book* new_book)
 {
     assert(new_book->prev == NULL);
     assert(new_book->next == NULL);
@@ -126,17 +125,16 @@ void books_destroy(struct books* books)
 int main(int argc, char* argv[])
 {
     struct books list = { 0 };
-    struct book* b1 = NULL;
-    struct book* b2 = NULL;
+    
     try
     {
-        b1 = calloc(1, sizeof(struct book));
+        struct book* b1 = calloc(1, sizeof(struct book));
         if (b1 == NULL) throw;
-        insert_end(&list, b1 /*REF MOVED*/);
+        books_push_back(&list, b1 /*REF MOVED*/);
 
-        b2 = calloc(1, sizeof(struct book));
+        struct book* b2 = calloc(1, sizeof(struct book));
         if (b2 == NULL) throw;
-        insert_end(&list, b2 /*REF MOVED*/);
+        books_push_back(&list, b2 /*REF MOVED*/);
     }
     catch {
     }

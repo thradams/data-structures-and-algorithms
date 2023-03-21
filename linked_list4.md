@@ -40,6 +40,7 @@ void book_list_destroy(struct book_list* list)
     struct book_list_node* it = list->head;
     while (it != NULL) {
         struct book_list_node* next = it->next;
+        free(it->data); /*we are owner*/
         free(it);
         it = next;
     }

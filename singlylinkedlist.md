@@ -5,6 +5,25 @@
 
 
 ```c
+struct book {
+    char *title;
+    struct book* next;
+};
+
+void book_destroy(struct book* book) 
+{
+    free(book->title);
+}
+
+struct books {
+    struct book* head, *tail;
+};
+
+```
+
+[source → ](linked_lists1.md)
+ 
+ ```c
 struct book  {
   char title[10];
   struct book * next;
@@ -16,7 +35,8 @@ struct book_list {
 };
 ```
 
-[source → ](linked_lists1.md)
+[source → ](linked_lists1d.md)
+ 
  
 ```c
 

@@ -5,7 +5,7 @@
 /*
  * Sample 4 - dynamic arrays of onwer pointer of books. onwership transfered
  */
- 
+
 
 #pragma once
 #include <stdlib.h>
@@ -24,6 +24,8 @@ struct book {
 
 void book_destroy(struct book* book)
 {
+    //pre condition
+    assert(book != NULL);
     free(book->title);
 }
 
@@ -33,23 +35,26 @@ struct books {
     int capacity;
 };
 
-int int_array_reserve(struct books* p, int n)
+int int_array_reserve(struct books* books, int n)
 {
-    if (n > p->capacity) {
+    /*pre condition*/
+    assert(books != NULL);
 
-        static_assert(sizeof(p->data[0]) < INT_MAX,
+    if (n > books->capacity) {
+
+        static_assert(sizeof(books->data[0]) < INT_MAX,
             "we assume sizeof data is less than int max");
 
         static_assert((size_t)INT_MAX * (size_t)INT_MAX < SIZE_MAX,
             "we assume size_t is 2x bigger than int, consequently will not overflow");
 
 
-        const size_t new_size_bytes = n * sizeof(p->data[0]);
-        void* pnew = realloc(p->data, new_size_bytes);
+        const size_t new_size_bytes = n * sizeof(books->data[0]);
+        void* pnew = realloc(books->data, new_size_bytes);
         if (pnew)
         {
-            p->data = pnew;
-            p->capacity = n;
+            books->data = pnew;
+            books->capacity = n;
         }
         else
         {
@@ -60,25 +65,26 @@ int int_array_reserve(struct books* p, int n)
     return 0;
 }
 
-int books_push(struct books* p, struct book* book)
+int books_push(struct books* books, struct book* book)
 {
-    /*pré condition*/
+    /*pre condition*/
+    assert(books != NULL);
     assert(book != NULL);
-    
-    if (p->size == INT_MAX) {
+
+    if (books->size == INT_MAX) {
         return EOVERFLOW;
     }
 
-    if (p->size + 1 > p->capacity) {
+    if (books->size + 1 > books->capacity) {
 
         unsigned long long new_capacity =
-            p->capacity + p->capacity / 2;
+            books->capacity + books->capacity / 2;
 
 
-        if (new_capacity < p->size + 1)
+        if (new_capacity < books->size + 1)
         {
             //cover first and second insertion
-            new_capacity = p->size + 1;
+            new_capacity = books->size + 1;
         }
         else if (new_capacity > INT_MAX)
         {
@@ -86,21 +92,24 @@ int books_push(struct books* p, struct book* book)
             new_capacity = INT_MAX;
         }
 
-        int error = int_array_reserve(p, (int)new_capacity);
+        int error = int_array_reserve(books, (int)new_capacity);
         if (error != 0) {
             return error;
         }
     }
 
-    p->data[p->size] = book; /*MOVED*/
-    p->size++;
+    books->data[books->size] = book; /*MOVED*/
+    books->size++;
 
     return 0;
 }
 
 void books_destroy(struct books* books)
 {
-    for (int i = 0; i < books->size; i++ ) {
+    /*pre condition*/
+    assert(books != NULL);
+
+    for (int i = 0; i < books->size; i++) {
         book_destroy(books->data[i]);
     }
     free(books->data);
@@ -117,7 +126,7 @@ int main()
     try
     {
         book = calloc(1, sizeof(struct book));
-        if (book == NULL) throw;        
+        if (book == NULL) throw;
         book->title = strdup("title 1");
         if (book->title == NULL) throw;
         if (books_push(&books, book/*MOVED*/) == 0)
@@ -132,10 +141,11 @@ int main()
         //in case of error...
         book_destroy(book);
     }
-    
+
     books_destroy(&books);
 
 }
 
 ```
+
 

@@ -1,3 +1,5 @@
+[Main](README.md) > [Linked lists](linked_lists.md) > [Doubly Linked lists](doublelinkedlist.md) > Sample 1
+
 ```c
 
 /*

@@ -92,7 +92,7 @@ struct books {
 * [x] item is a reference
 * [ ] item is a owned reference
 * [ ] item is copied
-* [x] item is moved
+* [ ] item is moved
 * [ ] item needs destructor
 * [ ] intrusive
 

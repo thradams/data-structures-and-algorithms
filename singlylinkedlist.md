@@ -3,6 +3,7 @@
 
 # Singly Linked List
 
+Sample 1
 
 ```c
 struct book {
@@ -17,6 +18,8 @@ struct book_list {
 ```
 
 [source → ](linked_lists1.md)
+ 
+ Sample 2
  
  ```c
 struct book {
@@ -36,7 +39,9 @@ struct books {
 
 [source → ](linked_lists1d.md)
  
- 
+  
+Sample 3
+
 ```c
 
 struct book {
@@ -54,6 +59,9 @@ struct book_list {
 ```
 [source → ](linked_list2.md)
 
+ 
+ Sample 4
+ 
 ```c
 
 struct book {
@@ -71,6 +79,9 @@ struct book_list {
 ```
 [source → ](linked_list3.md)
 
+ 
+ Sample 5
+ 
 ```c
 
 struct book {
@@ -87,5 +98,6 @@ struct book_list {
 };
 ```
 [source → ](linked_list4.md)
+
 
 

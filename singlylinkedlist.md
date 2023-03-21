@@ -3,7 +3,12 @@
 
 # Singly Linked List
 
+[x] singly linked list
+
 Sample 1
+[ ] list of pointers to book
+[ ] book needs destructor
+[x] intrusive
 
 ```c
 struct book {
@@ -21,6 +26,10 @@ struct book_list {
  
  Sample 2
  
+ 
+[x] book needs destructor
+[x] intrusive
+
  ```c
 struct book {
     char *title;
@@ -41,6 +50,9 @@ struct books {
  
   
 Sample 3
+
+[ ] book needs destructor
+[ ] intrusive
 
 ```c
 
@@ -63,6 +75,10 @@ struct books {
  
  Sample 4
  
+[x] list of non owner pointers to book
+[ ] book needs destructor
+[ ] intrusive
+ 
 ```c
 
 struct book {
@@ -83,6 +99,11 @@ struct book_list {
  
  Sample 5
  
+[x] list of owner pointers to book
+[ ] book needs destructor
+[ ] intrusive
+
+
 ```c
 
 struct book {

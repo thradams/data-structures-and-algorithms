@@ -2,6 +2,10 @@
 
 
 ```c
+/*
+ * Sample 1
+ */
+ 
 #include <stdlib.h>
 #include <assert.h>
 

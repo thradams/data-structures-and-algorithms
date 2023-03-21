@@ -1,7 +1,6 @@
 [Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 3
 
 ```c
-
 #pragma once
 #include <stdlib.h>
 #include <assert.h>
@@ -59,7 +58,7 @@ int books_push(struct books* p, struct book* book)
 {
     /*pré condition*/
     assert(book != NULL);
-    
+
     if (p->size == INT_MAX) {
         return EOVERFLOW;
     }
@@ -88,6 +87,8 @@ int books_push(struct books* p, struct book* book)
     }
 
     p->data[p->size] = *book; /*MOVED*/
+    book->title = NULL; /*MOVED*/
+
     p->size++;
 
     return 0;
@@ -95,7 +96,7 @@ int books_push(struct books* p, struct book* book)
 
 void books_destroy(struct books* books)
 {
-    for (int i = 0; i < books->size; i++ ) {
+    for (int i = 0; i < books->size; i++) {
         book_destroy(&books->data[i]);
     }
     free(books->data);
@@ -108,14 +109,16 @@ int main()
     struct book book = { 0 };
     book.title = strdup("title 1");
     books_push(&books, &book/*MOVED*/);
-    
+
     struct book book2 = { 0 };
     book.title = strdup("title 2");
     books_push(&books, &book2/*MOVED*/);
-    
+
+
+    book_destroy(&book);
+    book_destroy(&book2);
+
     books_destroy(&books);
-
 }
-
 ```
 

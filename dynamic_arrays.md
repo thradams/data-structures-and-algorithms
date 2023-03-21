@@ -3,6 +3,7 @@
 
 # Dynamic arrays
 
+Sample 1
 
 ```c
 struct items {
@@ -13,6 +14,7 @@ struct items {
 ```
 [source → ](array1.md)
 
+Sample 2
 
 ```c
 struct book {
@@ -28,7 +30,7 @@ struct books {
 ```
 [source → ](array2.md)
 
-
+Sample 3
 ```c
 struct book {
     char* title;
@@ -46,7 +48,7 @@ struct books {
 [source → ](array3.md)
 
 
-
+Sample 4
 ```c
 struct book {
     char* title;

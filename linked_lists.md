@@ -5,4 +5,4 @@
 
 * [Singly Linked List](singlylinkedlist.md)
 
-* [Doubly Linked List](doublelinkedlist.md) (TODO)
+* [Doubly Linked List](doublelinkedlist.md)

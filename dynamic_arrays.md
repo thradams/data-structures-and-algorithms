@@ -6,7 +6,7 @@
 
 ```c
 struct items {
-  int* data;
+  int* data; /*array of ints*/
   int  size;
   int  capacity;
 }
@@ -20,7 +20,7 @@ struct book {
 };
 
 struct books {
-    struct book* data;
+    struct book* data; /*array of books*/
     int size;
     int capacity;
 };
@@ -38,7 +38,7 @@ void book_destroy(struct book* book) {
     free(book->title);
 }
 struct books {
-    struct book* data;
+    struct book* data; /*array of books*/
     int size;
     int capacity;
 };
@@ -56,7 +56,7 @@ void book_destroy(struct book* book) {
     free(book->title);
 }
 struct books {
-    struct book** data;
+    struct book** data; /*array of onwer pointers of books*/
     int size;
     int capacity;
 };

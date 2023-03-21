@@ -1,17 +1,21 @@
 [Main](README.md) > [Linked lists](linked_lists.md) > [Singly Linked lists](singlylinkedlist.md) > Sample 2
 
 ```c
+
+/*
+* Sample 2
+*/
+
 #include <stdlib.h>
 #include <assert.h>
 
 
 struct book {
-    char *title;
+    char* title;
     struct book* next;
 };
 
-void book_destroy(struct book* book) 
-{
+void book_destroy(struct book* book) {
     free(book->title);
 }
 
@@ -20,24 +24,28 @@ struct books {
 };
 
 
-void books_append(struct books* list, struct book* book)
+void books_append(struct books* books, struct book* book)
 {
     //pre condition
+    assert(books != NULL);
     assert(book->next == NULL);
 
-    if (list->head == NULL) {
-        list->head = book;
-        list->tail = book;
+    if (books->head == NULL) {
+        books->head = book;
+        books->tail = book;
     }
     else {
-        list->tail->next = book;
-        list->tail = book;
+        books->tail->next = book;
+        books->tail = book;
     }
 }
 
-void books_destroy(struct books* list)
+void books_destroy(struct books* books)
 {
-    struct book* it = list->head;
+    //pre condition
+    assert(books != NULL);
+
+    struct book* it = books->head;
     while (it != NULL)
     {
         struct book* next = it->next;
@@ -58,12 +66,12 @@ int main(int argc, char* argv[])
     struct book* book = NULL;
     try
     {
-        book = calloc(1, sizeof (struct book));
+        book = calloc(1, sizeof(struct book));
         if (book == NULL) throw;
         book->title = strdup("title 1");
         if (book->title == NULL) throw;
         books_append(&books, book/*MOVED*/);
-        book = NULL; /*MOVED ON SUCCESS*/        
+        book = NULL; /*MOVED ON SUCCESS, NEVER FAILS*/
     }
     catch {
     }
@@ -75,6 +83,5 @@ int main(int argc, char* argv[])
 
     books_destroy(&books);
 }
-
 ```
 

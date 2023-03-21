@@ -6,16 +6,11 @@
 
 ```c
 struct book {
-    char *title;
+    char title[10];
     struct book* next;
 };
 
-void book_destroy(struct book* book) 
-{
-    free(book->title);
-}
-
-struct books {
+struct book_list {
     struct book* head, *tail;
 };
 
@@ -24,15 +19,19 @@ struct books {
 [source → ](linked_lists1.md)
  
  ```c
-struct book  {
-  char title[10];
-  struct book * next;
+struct book {
+    char *title;
+    struct book* next;
 };
 
+void book_destroy(struct book* book) {
+    free(book->title);
+}
 
-struct book_list {
-  struct book *head, *tail;
+struct books {
+    struct book* head, *tail;
 };
+
 ```
 
 [source → ](linked_lists1d.md)

@@ -1,0 +1,151 @@
+```c
+
+/*
+ * Sample 2
+ */
+
+#include <stdlib.h>
+#include <assert.h>
+
+
+struct book {
+    char * title;
+    struct book* next;
+    struct book* prev;
+};
+
+void book_destroy(struct book* book)
+{
+    free(book->title);
+}
+
+struct books {
+    struct book* head, *tail;
+};
+
+void books_insert_after(struct books* books, struct book* book, struct book* new_book)
+{
+    assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
+
+    new_book->prev = book;
+    if (book->next == NULL) {        
+        books->tail = new_book;
+    }
+    else {
+        new_book->next = book->next;
+        book->next->prev = new_book;
+    }
+    book->next = new_book;
+}
+
+void books_insert_before(struct books* books, struct book* node, struct book* new_book)
+{
+    assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
+
+    new_book->next = node;
+    if (node->prev == NULL) {        
+        books->head = new_book;
+    }
+    else {
+        new_book->prev = node->prev;
+        node->prev->next = new_book;
+    }
+    node->prev = new_book;
+
+}
+
+void books_push_front(struct books* books, struct book* new_book)
+{
+    assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
+
+    if (books->head == NULL)
+    {
+        books->head = new_book;
+        books->tail = new_book;
+    }
+    else
+    {
+        new_book->next = books->head;
+        books->head = new_book;
+        books->head->prev = new_book;
+    }
+}
+
+void books_push_back(struct books* books, struct book* new_book)
+{
+    assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
+
+    if (books->tail == NULL)
+    {
+        books->head = new_book;
+        books->tail = new_book;
+    }
+    else
+    {
+        new_book->prev = books->tail;
+        books->tail = new_book;
+        books->tail->next = new_book;
+    }
+}
+
+void books_remove_and_delete(struct books* books, struct book* node)
+{
+    if (node->prev == NULL)
+        books->head = node->next;
+    else
+        node->prev->next = node->next;
+
+    if (node->next == NULL)
+        books->tail = node->prev;
+    else
+        node->next->prev = node->prev;
+    
+    books_destroy(node);
+    free(node);
+}
+
+
+void books_destroy(struct books* books)
+{
+    //pre condition
+    assert(books != NULL);
+
+    struct book* it = books->head;
+    while (it != NULL)
+    {
+        struct book* next = it->next;
+        books_destroy(it);
+        free(it);
+        it = next;
+    }
+}
+
+#define try if (1)
+#define throw goto CATCH_BLOCK
+#define catch else CATCH_BLOCK:
+
+int main(int argc, char* argv[])
+{
+    struct books list = { 0 };
+    
+    try
+    {
+        struct book* b1 = calloc(1, sizeof(struct book));
+        if (b1 == NULL) throw;
+        books_push_back(&list, b1 /*REF MOVED*/);
+
+        struct book* b2 = calloc(1, sizeof(struct book));
+        if (b2 == NULL) throw;
+        books_push_back(&list, b2 /*REF MOVED*/);
+    }
+    catch {
+    }
+
+
+    books_destroy(&list);
+}
+```

@@ -7,6 +7,7 @@
 
 Sample 1
 * [ ] list of pointers to book
+* [x] owner
 * [ ] book needs destructor
 * [x] intrusive
 
@@ -27,8 +28,11 @@ struct book_list {
  Sample 2
  
  
+* [ ] list of pointers to book
+* [x] owner
 * [x] book needs destructor
 * [x] intrusive
+
 
  ```c
 struct book {
@@ -51,8 +55,11 @@ struct books {
   
 Sample 3
 
+* [ ] list of pointers to book
+* [ ] owner
 * [ ] book needs destructor
 * [ ] intrusive
+
 
 ```c
 
@@ -75,9 +82,11 @@ struct books {
  
  Sample 4
  
-* [x] list of non owner pointers to book
+* [x] list of pointers to book
+* [ ] owner
 * [ ] book needs destructor
 * [ ] intrusive
+
  
 ```c
 
@@ -99,7 +108,8 @@ struct book_list {
  
  Sample 5
  
-* [x] list of owner pointers to book
+* [x] list of pointers to book
+* [x] owner
 * [ ] book needs destructor
 * [ ] intrusive
 

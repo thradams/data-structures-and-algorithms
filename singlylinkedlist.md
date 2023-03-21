@@ -10,10 +10,12 @@ struct book  {
   struct book * next;
 };
 
+
 struct book_list {
   struct book *head, *tail;
 };
 ```
+
 [source → ](linked_lists1.md)
  
 ```c
@@ -40,7 +42,7 @@ struct book {
 };
 
 struct book_list_node {
-   struct book* data;
+   struct book* data; /*list of non-owner pointers to book*/
    struct book_list_node* next;
 };
 
@@ -49,4 +51,22 @@ struct book_list {
 };
 ```
 [source → ](linked_list3.md)
+
+```c
+
+struct book {
+    char title[10];
+};
+
+struct book_list_node {
+   struct book* data; /*list of owner pointers to book*/
+   struct book_list_node* next;
+};
+
+struct book_list {
+     struct book_list_node *head, * tail;
+};
+```
+[source → ](linked_list4.md)
+
 

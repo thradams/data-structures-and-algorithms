@@ -30,17 +30,36 @@ struct books {
 
 
 ```c
-struct item {
-  int i;
+struct book {
+    char* title;
 };
 
-struct items {
-  struct item** data;
-  int size;
-  int capacity;
+void book_destroy(struct book* book) {
+    free(book->title);
 }
+struct books {
+    struct book* data;
+    int size;
+    int capacity;
+};
 ```
 [source → ](array3.md)
 
 
+
+```c
+struct book {
+    char* title;
+};
+
+void book_destroy(struct book* book) {
+    free(book->title);
+}
+struct books {
+    struct book** data;
+    int size;
+    int capacity;
+};
+```
+[source → ](array4.md)
 

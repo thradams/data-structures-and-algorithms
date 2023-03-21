@@ -87,9 +87,9 @@ int main()
     struct books books = { 0 };
 
     struct book book = { .title = "title 1" };
-    books_push(&books, &book/*MOVED*/);
+    books_push(&books, &book /*COPIED*/);
     struct book book2 = { .title = "title 2" };
-    books_push(&books, &book2/*MOVED*/);
+    books_push(&books, &book2 /*COPIED*/);
     
     books_destroy(&books);
 

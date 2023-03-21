@@ -1,3 +1,5 @@
+[Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 2
+
 ```c
 #pragma once
 #include <stdlib.h>

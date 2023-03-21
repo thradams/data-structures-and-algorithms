@@ -1,11 +1,13 @@
 [Main](README.md) > [Linked lists](linked_lists.md) > [Singly Linked lists](singlylinkedlist.md) > Sample 2
 
 ```c
-
 /*
-* Sample 2
-*/
-
+ * Sample 2
+ List of books where 
+  - book has "next" (intrusive)
+  - book needs destructor
+ */
+ 
 #include <stdlib.h>
 #include <assert.h>
 

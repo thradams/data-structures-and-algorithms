@@ -1,3 +1,5 @@
+[Main](README.md) > [Linked lists](linked_lists.md) > [Singly Linked lists](singlylinkedlist.md) > Sample 2
+
 ```c
 #include <stdlib.h>
 #include <assert.h>

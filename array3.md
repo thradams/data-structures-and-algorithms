@@ -56,6 +56,9 @@ int int_array_reserve(struct books* p, int n)
 
 int books_push(struct books* p, struct book* book)
 {
+    /*pré condition*/
+    assert(book != NULL);
+    
     if (p->size == INT_MAX) {
         return EOVERFLOW;
     }

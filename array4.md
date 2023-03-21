@@ -56,6 +56,9 @@ int int_array_reserve(struct books* p, int n)
 
 int books_push(struct books* p, struct book* book)
 {
+    /*pré condition*/
+    assert(book != NULL);
+    
     if (p->size == INT_MAX) {
         return EOVERFLOW;
     }
@@ -92,7 +95,7 @@ int books_push(struct books* p, struct book* book)
 void books_destroy(struct books* books)
 {
     for (int i = 0; i < books->size; i++ ) {
-        book_destroy(&books->data[i]);
+        book_destroy(books->data[i]);
     }
     free(books->data);
 }
@@ -127,7 +130,6 @@ int main()
     books_destroy(&books);
 
 }
-
 
 ```
 

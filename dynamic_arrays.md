@@ -10,6 +10,7 @@ Sample 1
 * [x] item is copied
 * [ ] item is moved
 * [ ] item needs destructor
+* [x] cheap copy (int, double etc..)
 
 ```c
 struct items {

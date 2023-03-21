@@ -1,3 +1,4 @@
+[Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 3
 
 ```c
 

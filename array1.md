@@ -1,8 +1,9 @@
 ```c
-
 #pragma once
 #include <stdlib.h>
 #include <assert.h>
+#include <errno.h>
+#include <stdio.h>
 
 struct int_array {
     int* data;
@@ -11,14 +12,18 @@ struct int_array {
 };
 
 int int_array_reserve(struct int_array* p, int n)
-{
+{    
     if (n > p->capacity) {
-    
-        // n * sizeof(p->data[0]) does not overflow considering
-        _Static_assert(sizeof(p->data[0]) < INT_MAX, "");
-        _Static_assert(INT_MAX * INT_MAX < SIZE_MAX, "");
 
-        void* pnew = realloc(p->data, n * sizeof(p->data[0]));
+        static_assert(sizeof(p->data[0]) < INT_MAX, 
+                     "we assume sizeof data is less than int max");        
+        
+        static_assert((size_t)INT_MAX * (size_t)INT_MAX < SIZE_MAX,
+                      "we assume size_t is 2x bigger than int, consequently will not overflow");
+
+        
+        const size_t new_size_bytes = n * sizeof(p->data[0]);
+        void* pnew = realloc(p->data, new_size_bytes);
         if (pnew)
         {
             p->data = pnew;
@@ -26,41 +31,46 @@ int int_array_reserve(struct int_array* p, int n)
         }
         else
         {
-            return 0; /*out of mem*/
+            return ENOMEM;
         }
     }
-    
-    return p->capacity;
+
+    return 0;
 }
 
 int int_array_push(struct int_array* p, int value)
 {
-    if (p->size == INT_MAX) {
-       /*after this point is overflow*/
-       return 0;
+    if (p->size == INT_MAX) {        
+        return EOVERFLOW;
     }
-    
+
     if (p->size + 1 > p->capacity) {
-    
-       if (p->capacity > INT_MAX / 2 ) {
-          /*after this point is overflow*/
-          return 0;
-       }
-    
-        int n = p->capacity * 2;
-        if (n == 0) {
-            n = 1;
-        }
+
+        unsigned long long new_capacity = 
+            p->capacity + p->capacity / 2;
         
-        if (int_array_reserve(p, n) == 0) {
-            return 0;
+        
+        if (new_capacity < p->size + 1)
+        {
+            //cover first and second insertion
+            new_capacity = p->size + 1;
+        }
+        else if (new_capacity > INT_MAX)
+        {
+            //cover last possible insertion
+           new_capacity = INT_MAX;
+        }
+
+        int error = int_array_reserve(p, (int)new_capacity);
+        if (error != 0) {
+            return error;
         }
     }
 
     p->data[p->size] = value;
     p->size++;
 
-    return p->size;
+    return 0;
 }
 
 void int_array_destroy(struct int_array* p)
@@ -68,18 +78,15 @@ void int_array_destroy(struct int_array* p)
     free(p->data);
 }
 
-
-
 int main()
 {
     struct int_array a = { 0 };
-    int_array_push(&a, 1);
+    int_array_push(&a, 1);    
     int_array_push(&a, 2);
-    for (int i = 0; i < a.size; i++) {
-        printf("%d\n", a.data[i]);
-    }
     int_array_destroy(&a);
 }
+
 ```
+
 
 

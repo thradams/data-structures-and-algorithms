@@ -1,6 +1,11 @@
-[Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 4
+[Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 4 - dynamic arrays of onwer pointer of books. onwership transfered
 
 ```c
+
+/*
+ * Sample 4 - dynamic arrays of onwer pointer of books. onwership transfered
+ */
+ 
 
 #pragma once
 #include <stdlib.h>

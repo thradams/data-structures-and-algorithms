@@ -3,13 +3,16 @@
 
 # Singly Linked List
 
-* [x] singly linked list
 
 Sample 1
-* [ ] list of pointers to book
-* [x] owner
-* [ ] book needs destructor
+
+* [ ] item is a reference
+* [x] item is a owned reference
+* [ ] item is copied
+* [x] item is moved
+* [ ] item needs destructor
 * [x] intrusive
+
 
 ```c
 struct book {
@@ -27,11 +30,13 @@ struct book_list {
  
  Sample 2
  
- 
-* [ ] list of pointers to book
-* [x] owner
-* [x] book needs destructor
+* [ ] item is a reference
+* [x] item is a owned reference
+* [ ] item is copied
+* [x] item is moved
+* [x] item needs destructor
 * [x] intrusive
+
 
 
  ```c
@@ -54,11 +59,13 @@ struct books {
  
   
 Sample 3
-
-* [ ] list of pointers to book
-* [ ] owner
-* [ ] book needs destructor
+* [ ] item is a reference
+* [ ] item is a owned reference
+* [x] item is copied
+* [ ] item is moved
+* [ ] item needs destructor
 * [ ] intrusive
+
 
 
 ```c
@@ -82,9 +89,11 @@ struct books {
  
  Sample 4
  
-* [x] list of pointers to book
-* [ ] owner
-* [ ] book needs destructor
+* [x] item is a reference
+* [ ] item is a owned reference
+* [ ] item is copied
+* [x] item is moved
+* [ ] item needs destructor
 * [ ] intrusive
 
  
@@ -108,9 +117,11 @@ struct book_list {
  
  Sample 5
  
-* [x] list of pointers to book
-* [x] owner
-* [ ] book needs destructor
+* [ ] item is a reference
+* [x] item is a owned reference
+* [ ] item is copied
+* [x] item is moved
+* [ ] item needs destructor
 * [ ] intrusive
 
 

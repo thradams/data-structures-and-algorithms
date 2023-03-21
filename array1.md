@@ -1,7 +1,10 @@
-[Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 1
+[Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 1 - dynamic arrays of ints
 
 ```c
-
+/*
+ * Dynamic arrays of ints
+ */
+ 
 #pragma once
 #include <stdlib.h>
 #include <assert.h>

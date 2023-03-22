@@ -41,14 +41,18 @@ struct book_list {
 
 
  ```c
+
 struct book {
-    char * title;
+    char* title;
     struct book* next;
     struct book* prev;
 };
 
-void book_destroy(struct book* book) {
-    free(book->title);
+void book_delete(struct book* book) {
+    if (book) { 
+        free(book->title); 
+        free(book);
+    }
 }
 
 struct books {

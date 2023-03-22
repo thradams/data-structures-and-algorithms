@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="default.min.css">
+    <script src="highlight.min.js"></script>
+    <script src="preprocessor.js"></script>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <th style="text-align: left; vertical-align: top; background-color: antiquewhite; padding-right: 20px;">
+                <h2>Linked List</h2>
+                <input type="checkbox" id="dtor" onchange="Generate()">Item has destructor <br>
+                <input type="checkbox" id="node" checked onchange="Generate()">Item is the list node<br>
+                <input type="checkbox" id="doubly" onchange="Generate()">doubly linked<br>
+            </th>
+            <th style="text-align: left; vertical-align: top; padding-left: 20px;">
+                <pre id="output"></pre>
+            </th>
+        </tr>
+    </table>
+
+    <script>
+        var list_source =
+            `
+
+#include <stdlib.h>
+#include <assert.h>
+#include <errno.h>
+
+struct book {
+@(DTOR)     char* title;
+@(!DTOR)     char title[10];
+@(!NODE)     struct book* next;
+@(!NODE DOUBLY)     struct book* prev;
+};
+@(DTOR)
+@(DTOR) void book_destroy(struct book* book) {
+@(DTOR)     free(book->title);
+@(DTOR) }
+@(NODE) 
+@(NODE) struct book_list_node {
+@(NODE)    struct book book;
+@(NODE)    struct book_list_node* next;
+@(NODE) };
+
+struct books {
+    struct book* head, *tail;
+};
+
+@(NODE)int books_push_back(struct books* books, struct book* new_book)
+@(!NODE)void books_push_back(struct books* books, struct book* new_book)
+{
+    assert(books != NULL);
+    assert(new_book != NULL);
+@(DOUBLY)      assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
+
+@(NODE)    struct book_list_node* node = calloc(1, sizeof * node);
+@(NODE)    if (node == NULL) return ENOMEM;
+@(NODE)    node->book = *new_book;
+
+
+    if (books->tail == NULL) {
+        books->head = new_book;
+@(DOUBLY)         books->tail = new_book;
+    }
+    else {
+@(DOUBLY)         new_book->prev = books->tail;        
+        books->tail->next = new_book;
+@(DOUBLY)         books->tail = new_book;
+    }
+@(NODE)   return 0;
+}
+
+void books_push_front(struct books* books, struct book* new_book)
+{
+    assert(books != NULL);
+    assert(new_book != NULL);
+@(DOUBLY)     assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
+
+    if (books->head == NULL) {
+        books->head = new_book;
+        books->tail = new_book;
+    }
+    else {
+        new_book->next = books->head;        
+@(DOUBLY)        books->head->prev = new_book;
+        books->head = new_book;
+    }
+}
+
+void book_list_destroy(struct books* books)
+{
+    //pre condition
+    assert(books != NULL);
+
+    struct book* it = books->head;
+    while (it != NULL) {
+        struct book* next = it->next;
+@DTOR         book_destroy(it);
+        free(it);
+        it = next;
+    }
+}
+
+int main(int argc, char* argv[])
+{
+    struct books list = { 0 };
+    struct book* b1 = calloc(1, sizeof(struct book));
+    if (b1)
+    {
+        book_list_append(&list, b1);
+    }
+    book_list_destroy(&list);
+}
+`;
+
+        function Generate() {
+            var flags = "";
+            var bdtor = document.getElementById("dtor").checked;
+            if (bdtor) flags += " DTOR";
+
+            var bnode = !document.getElementById("node").checked;
+            if (bnode) flags += " NODE";
+
+            var bdoubly = document.getElementById("doubly").checked;
+            if (bdoubly) flags += " DOUBLY";
+
+            var out = preprocessor(list_source, flags);
+            var html = hljs.highlight(out, { language: 'c' }).value;
+            document.getElementById("output").innerHTML = html;
+        }
+        Generate();
+    </script>
+</body>
+
+</html>

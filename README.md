@@ -13,7 +13,7 @@ guarantee do we have? (none)
 Thinking about this problem I decided to create this repository with reliable and 
 production quality source code for data structures and algorithms. 
 
-In the future I want a web tool to guide the user and generate the code automatically.
+A web tool to generate code is on the way. (See generator folder - WORK IN PROGRESS)
 
 A this point samples will be created using a representative types for structs, strings,
 ints.  The programmer will have to replace the code for it's current type.

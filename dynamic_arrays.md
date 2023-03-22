@@ -74,6 +74,7 @@ Sample 4
 * [x] item is a owned  reference
 * [ ] item is copied
 * [x] item is moved
+* [ ] item is unconditionally moved
 * [x] item needs destructor
 
 ```c
@@ -92,3 +93,29 @@ struct books {
 ```
 [source → ](array4.md)
 
+
+Sample 5
+
+* [ ] item is a reference
+* [x] item is a owned  reference
+* [ ] item is copied
+* [x] item is moved
+* [x] item is unconditionally moved
+* [x] item needs destructor
+
+
+```c
+struct book {
+    char* title;
+};
+
+void book_destroy(struct book* book) {
+    free(book->title);
+}
+struct books {
+    struct book** data; /*array of onwer pointers of books*/
+    int size;
+    int capacity;
+};
+```
+[source → ](array5.md)

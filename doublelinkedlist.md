@@ -65,6 +65,7 @@ struct books {
  
   
 Sample 3
+
 * [ ] item is a reference
 * [ ] item is a owned reference
 * [x] item is copied
@@ -77,16 +78,19 @@ Sample 3
 ```c
 
 struct book {
-    char title[10];
+    char title[20];
+    struct book* next;
+    struct book* prev;
 };
 
-struct book_list_node {
+struct book_node {
     struct book book;
-    struct book_list_node* next;
+    struct book_node* next;
+    struct book_node* prev;
 };
 
 struct books {
-    struct book_list_node* head, *tail;
+    struct book_node* head, *tail;
 };
 
 ```

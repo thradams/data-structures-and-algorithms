@@ -140,6 +140,7 @@ int main()
     if (book != NULL) {
         //in case of error...
         book_destroy(book);
+        free(book);
     }
 
     books_destroy(&books);

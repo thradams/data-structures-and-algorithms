@@ -104,7 +104,7 @@ struct book {
 };
 
 struct book_list_node {
-   struct book* data; /*list of non-owner pointers to book*/
+   struct book* data;
    struct book_list_node* next;
 };
 
@@ -132,7 +132,7 @@ struct book {
 };
 
 struct book_list_node {
-   struct book* data; /*list of owner pointers to book*/
+   struct book* data;
    struct book_list_node* next;
 };
 

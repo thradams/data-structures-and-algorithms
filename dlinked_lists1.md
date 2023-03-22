@@ -1,6 +1,7 @@
 [Main](README.md) > [Linked lists](linked_lists.md) > [Doubly Linked lists](doublelinkedlist.md) > Sample 1
 
 ```c
+
 /*
  * Sample 1
  */
@@ -72,9 +73,9 @@ void books_push_front(struct books* books, struct book* new_book)
         books->tail = new_book;
     }
     else {
-        new_book->next = books->head;
-        books->head = new_book;
+        new_book->next = books->head;        
         books->head->prev = new_book;
+        books->head = new_book;
     }
 }
 
@@ -90,9 +91,9 @@ void books_push_back(struct books* books, struct book* new_book)
         books->tail = new_book;
     }
     else {
-        new_book->prev = books->tail;
-        books->tail = new_book;
+        new_book->prev = books->tail;        
         books->tail->next = new_book;
+        books->tail = new_book;
     }
 }
 
@@ -139,11 +140,11 @@ int main(int argc, char* argv[])
     {
         struct book* book1 = calloc(1, sizeof(struct book));
         if (book1 == NULL) throw;
-        books_push_back(&books, book1 /*REF MOVED*/);
+        books_push_back(&books, book1 /*SINK*/);
 
         struct book* book2 = calloc(1, sizeof(struct book));
         if (book2 == NULL) throw;
-        books_push_back(&books, book2 /*REF MOVED*/);
+        books_push_back(&books, book2 /*SINK*/);
     }
     catch {
     }
@@ -151,5 +152,6 @@ int main(int argc, char* argv[])
 
     books_destroy(&books);
 }
+
 ```
 

@@ -4,7 +4,7 @@
 # Singly Linked List
 
 
-Sample 1
+## Sample 1
 
 * [ ] item is a reference
 * [x] item is a owned reference
@@ -28,7 +28,7 @@ struct book_list {
 
 [source → ](linked_lists1.md)
  
- Sample 2
+ ## Sample 2
  
 * [ ] item is a reference
 * [x] item is a owned reference
@@ -58,7 +58,7 @@ struct books {
 [source → ](linked_lists1d.md)
  
   
-Sample 3
+## Sample 3
 * [ ] item is a reference
 * [ ] item is a owned reference
 * [x] item is copied
@@ -87,7 +87,7 @@ struct books {
 [source → ](linked_list2.md)
 
  
- Sample 4
+ ## Sample 4
  
 * [x] item is a reference
 * [ ] item is a owned reference
@@ -115,7 +115,7 @@ struct book_list {
 [source → ](linked_list3.md)
 
  
- Sample 5
+ ## Sample 5
  
 * [ ] item is a reference
 * [x] item is a owned reference

@@ -111,6 +111,7 @@ void books_destroy(struct books* books)
 
     for (int i = 0; i < books->size; i++) {
         book_destroy(books->data[i]);
+        free(books->data[i]);
     }
     free(books->data);
 }

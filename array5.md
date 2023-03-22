@@ -1,3 +1,5 @@
+[Main](README.md) > [Dynamic Arrays](dynamic_arrays.md) > Sample 5 - dynamic arrays of onwer pointer of books. onwership transfered unconditionally
+
 ```c
 
 /*

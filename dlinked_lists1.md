@@ -16,54 +16,62 @@ struct book {
 };
 
 struct books {
-    struct book* head, *tail;
+    struct book* head, * tail;
 };
 
 void books_insert_after(struct books* books, struct book* book, struct book* new_book)
 {
+    assert(books != NULL);
+    assert(book != NULL);
+    assert(new_book != NULL);
     assert(new_book->prev == NULL);
     assert(new_book->next == NULL);
 
     new_book->prev = book;
-    if (book->next == NULL) {        
+
+    if (book->next == NULL) {
         books->tail = new_book;
     }
     else {
         new_book->next = book->next;
         book->next->prev = new_book;
     }
+
     book->next = new_book;
 }
 
-void books_insert_before(struct books* books, struct book* node, struct book* new_book)
+void books_insert_before(struct books* books, struct book* book, struct book* new_book)
 {
+    assert(books != NULL);
+    assert(book != NULL);
+    assert(new_book != NULL);
     assert(new_book->prev == NULL);
     assert(new_book->next == NULL);
 
-    new_book->next = node;
-    if (node->prev == NULL) {        
+    new_book->next = book;
+    if (book->prev == NULL) {
         books->head = new_book;
     }
     else {
-        new_book->prev = node->prev;
-        node->prev->next = new_book;
+        new_book->prev = book->prev;
+        book->prev->next = new_book;
     }
-    node->prev = new_book;
+    book->prev = new_book;
 
 }
 
 void books_push_front(struct books* books, struct book* new_book)
 {
+    assert(books != NULL);
+    assert(new_book != NULL);
     assert(new_book->prev == NULL);
     assert(new_book->next == NULL);
 
-    if (books->head == NULL)
-    {
+    if (books->head == NULL) {
         books->head = new_book;
         books->tail = new_book;
     }
-    else
-    {
+    else {
         new_book->next = books->head;
         books->head = new_book;
         books->head->prev = new_book;
@@ -72,46 +80,47 @@ void books_push_front(struct books* books, struct book* new_book)
 
 void books_push_back(struct books* books, struct book* new_book)
 {
+    assert(books != NULL);
+    assert(new_book != NULL);
     assert(new_book->prev == NULL);
     assert(new_book->next == NULL);
 
-    if (books->tail == NULL)
-    {
+    if (books->tail == NULL) {
         books->head = new_book;
         books->tail = new_book;
     }
-    else
-    {
+    else {
         new_book->prev = books->tail;
         books->tail = new_book;
         books->tail->next = new_book;
     }
 }
 
-void books_remove_and_free(struct books* books, struct book* node)
+void books_remove_and_free(struct books* books, struct book* book)
 {
-    if (node->prev == NULL)
-        books->head = node->next;
-    else
-        node->prev->next = node->next;
+    assert(books != NULL);
+    assert(book != NULL);
 
-    if (node->next == NULL)
-        books->tail = node->prev;
+    if (book->prev == NULL)
+        books->head = book->next;
     else
-        node->next->prev = node->prev;
+        book->prev->next = book->next;
 
-    free(node);
+    if (book->next == NULL)
+        books->tail = book->prev;
+    else
+        book->next->prev = book->prev;
+
+    free(book);
 }
 
 
 void books_destroy(struct books* books)
 {
-    //pre condition
     assert(books != NULL);
 
     struct book* it = books->head;
-    while (it != NULL)
-    {
+    while (it != NULL) {
         struct book* next = it->next;
         free(it);
         it = next;
@@ -124,23 +133,23 @@ void books_destroy(struct books* books)
 
 int main(int argc, char* argv[])
 {
-    struct books list = { 0 };
-    
+    struct books books = { 0 };
+
     try
     {
-        struct book* b1 = calloc(1, sizeof(struct book));
-        if (b1 == NULL) throw;
-        books_push_back(&list, b1 /*REF MOVED*/);
+        struct book* book1 = calloc(1, sizeof(struct book));
+        if (book1 == NULL) throw;
+        books_push_back(&books, book1 /*REF MOVED*/);
 
-        struct book* b2 = calloc(1, sizeof(struct book));
-        if (b2 == NULL) throw;
-        books_push_back(&list, b2 /*REF MOVED*/);
+        struct book* book2 = calloc(1, sizeof(struct book));
+        if (book2 == NULL) throw;
+        books_push_back(&books, book2 /*REF MOVED*/);
     }
     catch {
     }
 
 
-    books_destroy(&list);
+    books_destroy(&books);
 }
 ```
 

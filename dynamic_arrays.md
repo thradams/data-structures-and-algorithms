@@ -35,7 +35,7 @@ struct book {
 };
 
 struct books {
-    struct book* data; /*array of books*/
+    struct book* data;
     int size;
     int capacity;
 };
@@ -59,8 +59,9 @@ struct book {
 void book_destroy(struct book* book) {
     free(book->title);
 }
+
 struct books {
-    struct book* data; /*array of books*/
+    struct book* data;
     int size;
     int capacity;
 };
@@ -85,8 +86,9 @@ struct book {
 void book_destroy(struct book* book) {
     free(book->title);
 }
+
 struct books {
-    struct book** data; /*array of onwer pointers of books*/
+    struct book** data;
     int size;
     int capacity;
 };
@@ -116,7 +118,7 @@ void book_destroy(struct book* book) {
 int books_push(struct books* books, struct book* book /*sink*/);
 
 struct books {
-    struct book** data; /*array of onwer pointers of books*/
+    struct book** data;
     int size;
     int capacity;
 };

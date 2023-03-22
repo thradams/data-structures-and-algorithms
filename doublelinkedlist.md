@@ -136,19 +136,23 @@ struct book_list {
 
 
 ```c
-
 struct book {
-    char title[10];
+    char title[20];
+    struct book* next;
+    struct book* prev;
 };
 
-struct book_list_node {
-   struct book* data; /*list of owner pointers to book*/
-   struct book_list_node* next;
+struct book_node {
+    struct book* /*owner*/ book;
+    struct book_node* next;
+    struct book_node* prev;
 };
 
-struct book_list {
-     struct book_list_node *head, *tail;
+
+struct books {
+    struct book_node* head, *tail;
 };
+
 ```
 [source → ](dlinked_list4.md)
 

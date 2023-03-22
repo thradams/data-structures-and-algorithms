@@ -112,6 +112,9 @@ struct book {
 void book_destroy(struct book* book) {
     free(book->title);
 }
+
+int books_push(struct books* books, struct book* book /*sink*/);
+
 struct books {
     struct book** data; /*array of onwer pointers of books*/
     int size;

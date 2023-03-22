@@ -3,7 +3,7 @@
 
 # Dynamic arrays
 
-Sample 1
+## Sample 1
 
 * [ ] item is a reference
 * [ ] item is a owned  reference
@@ -21,7 +21,7 @@ struct items {
 ```
 [source → ](array1.md)
 
-Sample 2
+## Sample 2
 
 * [ ] item is a reference
 * [ ] item is a owned  reference
@@ -43,7 +43,7 @@ struct books {
 ```
 [source → ](array2.md)
 
-Sample 3
+## Sample 3
 
 * [ ] item is a reference
 * [ ] item is a owned  reference
@@ -69,7 +69,7 @@ struct books {
 [source → ](array3.md)
 
 
-Sample 4 
+## Sample 4 
 
 * [ ] item is a reference
 * [x] item is a owned  reference
@@ -96,7 +96,7 @@ struct books {
 [source → ](array4.md)
 
 
-Sample 5
+## Sample 5
 
 * [ ] item is a reference
 * [x] item is a owned  reference

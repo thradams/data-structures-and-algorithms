@@ -3,6 +3,45 @@
 
 # Linked list
 
-* [Singly Linked List](singlylinkedlist.md)
+## Sample 1 - Singly linked list
 
-* [Doubly Linked List](doublelinkedlist.md)
+```c
+struct book {
+     char* title;
+     struct book* next;
+};
+
+void book_destroy(struct book* book) {
+     free(book->title);
+}
+ 
+struct books {
+    struct book* head, *tail;
+};
+
+```
+
+[source → ](linked_lists10.md)
+
+## Sample 2 - Double linked list
+
+```c
+struct book {
+     char* title;
+     struct book* next;
+};
+
+void book_destroy(struct book* book) {
+     free(book->title);
+}
+ 
+struct books {
+    struct book* head, *tail;
+};
+
+```
+
+[source → ](linked_lists20.md)
+
+
+

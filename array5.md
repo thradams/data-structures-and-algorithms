@@ -5,12 +5,21 @@
 #include <limits.h>
 #include <string.h>
 
+#ifdef _MSC_VER
+#define strdup _strdup
+#endif
 
 struct book {
-    char title[10];
+    char* title;
 };
 
 
+void book_delete(struct book* book)
+{
+    if (book) {
+       free(book->title);
+    }
+}
 
 struct books {
     struct book** data;
@@ -35,6 +44,7 @@ int books_reserve(struct books* p, int n)
 
 
 
+[[nodiscard]]
 int books_push_back(struct books* p, struct book* book)
 {
         if (p->size == INT_MAX) {
@@ -66,7 +76,7 @@ int books_push_back(struct books* p, struct book* book)
          just for state simplification.
        */
 
-    p->data[p->size] = book; /*VIEW*/
+    p->data[p->size] = book; /*MOVED*/
         p->size++;
 
         return 0;
@@ -75,16 +85,37 @@ int books_push_back(struct books* p, struct book* book)
 void books_destroy(struct books* books)
 {
 
+    for (int i = 0; i < books->size; i++) {
+        book_delete(books->data[i]);
+    }
     free(books->data);
 }
 
+#define try  if (1)
+#define throw goto CATCH
+#define catch else CATCH:
 
 int main()
 {
    struct books books = { 0 };
 
 
-   struct book book = { .title = "book1" };
-   books_push_back(&books, &book/*VIEW*/);
-   books_destroy(&books);
+  struct book* book = NULL;
+  try
+  {
+    book = calloc(1, sizeof (struct book));
+    if (book == NULL) throw;
+    book->title = strdup("book1");
+    if (book->title == NULL) throw;
+    if (books_push_back(&books, book) == 0)
+    {
+      book = NULL; /*MOVED*/
+    }
+  }
+  catch
+  {
+  }
+
+  book_delete(book);
+  books_destroy(&books);
 }

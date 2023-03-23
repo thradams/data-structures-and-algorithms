@@ -43,29 +43,48 @@ void book_destroy(struct book* book) {
 
 struct books {
     struct book* data;
-    int size;
-    int capacity;
+        int size;
+        int capacity;
 };
 ```
 [source → ](array3.md)
 
 
-## Sample 4  -  Array of owner pointers to structs
+## Sample 4  -  Array of pointers to structs
+
+```c
+struct book {
+    char title[10];
+};
+
+struct books {
+    struct book** data;
+        int size;
+        int capacity;
+};
+
+```
+[source → ](array4.md)
+
+
+## Sample 5  -  Array of owner pointers to structs
 
 ```c
 struct book {
     char* title;
 };
 
-void book_destroy(struct book* book) {
-    free(book->title);
+void book_delete(struct book* book) {
+    if (book) {
+       free(book->title);
+    }
 }
 
 struct books {
     struct book** data;
-    int size;
-    int capacity;
+        int size;
+        int capacity;
 };
 ```
-[source → ](array4.md)
+[source → ](array5.md)
 

@@ -23,7 +23,7 @@ struct books {
 
 [source → ](linked_lists10.md)
 
-## Sample 2 - Double linked list
+## Sample 2 - Doubly linked list
 
 ```c
 struct book {

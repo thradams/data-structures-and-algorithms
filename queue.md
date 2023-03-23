@@ -16,6 +16,8 @@ struct queue {
     struct task* front;    /*oldest*/
 };
 ```
+[source → ](queue1.md)
+
 
 ## Sample 2 - Queue with fixed size, don´t add if full
 
@@ -34,4 +36,4 @@ struct queue {
 };
 ```
 
-
+[source → ](queue2.md)

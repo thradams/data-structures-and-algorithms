@@ -28,7 +28,9 @@ ints.  The programmer will have to replace the code for it's current type.
 
 * [Linked lists](linked_lists.md)
 * [Dynamic arrays](dynamic_arrays.md)
+* [Queue](queue.md)
 * [Hash maps](hashmaps.md)
+* 
 
 ## Algoritms
 

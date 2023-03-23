@@ -29,12 +29,14 @@ struct books {
 struct book {
      char* title;
      struct book* next;
+     struct book* prev;
 };
 
 void book_destroy(struct book* book) {
      free(book->title);
-}
+ }
  
+
 struct books {
     struct book* head, *tail;
 };

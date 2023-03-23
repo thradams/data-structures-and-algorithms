@@ -13,7 +13,8 @@ guarantee do we have? (none)
 Thinking about this problem I decided to create this repository with reliable and 
 production quality source code for data structures and algorithms. 
 
-A web tool to generate code is on the way. (See generator folder - WORK IN PROGRESS)
+A web tool to generate code is on the "generator" folder.
+A version (that may be outdated) is running here http://thradams.com/generator/dynamic_array.html
 
 A this point samples will be created using a representative types for structs, strings,
 ints.  The programmer will have to replace the code for it's current type.

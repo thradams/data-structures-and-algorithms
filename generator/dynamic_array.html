@@ -26,8 +26,11 @@
                 <label class="container">Array of pointers to structs</label> <br>
                 
                 <input id="type5" type="radio" name="radio" onchange="Generate()">
-                 <label class="container">Array of owner pointers to structs</label>   
-                
+                 <label class="container">Array of owner pointers to structs</label><br>
+
+                <input type="checkbox" id="C23" onchange="Generate()">C23<br>
+                <input type="checkbox" id="comments" onchange="Generate()">Add comments<br>
+
             </th>
             <th style="text-align: left; vertical-align: top; padding-left: 20px;  overflow: auto;">
                 <pre id="output"></pre>
@@ -37,11 +40,27 @@
 
     <script>
         var list_source =
-            `
+`
+@(REM BASIC) /*
+@(REM BASIC)  *  Dynamic array of basic types like integers
+@(REM BASIC) */
+
+@(REM COPIABLE) /*
+@(REM COPIABLE)  *  Dynamic array of copiable structs
+@(REM COPIABLE)  *  Copiable structs are structs where shallow is enoght
+@(REM COPIABLE) */
+
+@(REM MOVABLE) /*
+@(REM MOVABLE)  *  Dynamic array of movable structs
+@(REM MOVABLE)  *  Movable structs are structs where shallow is not enoght
+@(REM MOVABLE)  *  so we consider the inner data of the struct is moved
+@(REM MOVABLE) */
+
 #include <stdlib.h>
 #include <assert.h>
 #include <errno.h>
 #include <stdio.h>
+#include <limits.h>
 
 
 @(!BASIC)struct book {
@@ -88,14 +107,12 @@
     return 0;
 }
 
+@(MOVABLE ATR) [[nodiscard]]
+@(OWNERPTR ATR) [[nodiscard]]
 @(BASIC)int int_array_push_back(struct int_array* p, int value)
 @(!BASIC)int books_push_back(struct books* p, struct book* book)
 {
     if (p->size == INT_MAX) {        
-@(MOVABLE )        book_destroy(book);
-@(MOVABLE )        book = (struct book){0};
-@(OWNERPTR)        book_destroy(book);
-@(OWNERPTR)        free(book);
         return EOVERFLOW;
     }
 
@@ -111,10 +128,9 @@
            new_capacity = INT_MAX;
         }
 
-        int error = int_array_reserve(p, (int)new_capacity);
+@(BASIC)        int error = int_array_reserve(p, (int)new_capacity);
+@(!BASIC)       int error = books_reserve(p, (int)new_capacity);
         if (error != 0) {
-@(MOVABLE)        book_destroy(book);
-@(!W)        free(book);
             return error;
         }
     }
@@ -122,7 +138,6 @@
 @(BASIC   )    p->data[p->size] = value;
 @(COPIABLE)    p->data[p->size] = *book; /*COPIED*/
 @(MOVABLE )    p->data[p->size] = *book; /*MOVED*/
-@(MOVABLE )    book->title = NULL; /*MOVED*/
 @(POINTER )    p->data[p->size] = book; /*VIEW*/
     p->size++;
 
@@ -135,6 +150,7 @@
 @(MOVABLE)    for (int i = 0; i < books->size; i++) {
 @(MOVABLE)        book_destroy(&books->data[i]);
 @(MOVABLE)    }
+
 @(OWNERPTR)    for (int i = 0; i < books->size; i++) {
 @(OWNERPTR)        book_destroy(books->data[i]);
 @(OWNERPTR)        free(books->data[i]);
@@ -145,20 +161,24 @@
 int main()
 {
 @(BASIC)    struct int_array a = { 0 };
-@(BASIC)    int_array_push(&a, 1);    
-@(BASIC)    int_array_push(&a, 2);
+@(BASIC)    int_array_push_back(&a, 1);    
+@(BASIC)    int_array_push_back(&a, 2);
 @(BASIC)    int_array_destroy(&a);
 @(!BASIC)   struct books books = { 0 };
 @(!BASIC)
 @(COPIABLE)   struct book book = { .title ="book1" };
-@(COPIABLE)   books_push(&books, &book/*COPIED*/);
+@(COPIABLE)   books_push_back(&books, &book/*COPIED*/);
+@(COPIABLE)   books_destroy(&books);
 @(MOVABLE)
 @(MOVABLE)    try 
 @(MOVABLE)    {
 @(MOVABLE)      struct book book = { 0 };
 @(MOVABLE)      book.title = strdup("title 1");
 @(MOVABLE)      if (book.title == NULL) throw;
-@(MOVABLE)      books_push(&books, &book/*MOVED*/);
+@(MOVABLE)      if (books_push(&books, &book) != 0)
+@(MOVABLE)      {
+@(MOVABLE)         book = (struct book){0}; /*MOVED ON SUCCESS*/
+@(MOVABLE)      }
 @(MOVABLE)    }
 @(MOVABLE)    catch
 @(MOVABLE)    {
@@ -178,8 +198,10 @@ int main()
 @(OWNERPTR)    if (book == NULL) throw;
 @(OWNERPTR)    book->title = strdup("book1");
 @(OWNERPTR)    if (book->title == NULL) throw;
-@(OWNERPTR)    books_push(&books, book/*MOVED*/);
-@(OWNERPTR)    book = NULL;
+@(OWNERPTR)    if (books_push(&books, book) != 0)
+@(OWNERPTR)    {
+@(OWNERPTR)      book = NULL; /*MOVED*/
+@(OWNERPTR)    }
 @(OWNERPTR)  }
 @(OWNERPTR)  catch
 @(OWNERPTR)  {
@@ -200,6 +222,8 @@ int main()
             if (document.getElementById("type4").checked) flags += " POINTER";
             if (document.getElementById("type5").checked) flags += " OWNERPTR ";
             
+            if (document.getElementById("C23").checked) flags += " ATR";
+            if (document.getElementById("comments").checked) flags += " REM";
             
 
             var out = preprocessor(list_source, flags);

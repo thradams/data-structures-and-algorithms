@@ -12,9 +12,19 @@
         <tr>
             <th style="text-align: left; vertical-align: top; background-color: antiquewhite; padding-right: 20px;">
                 <h2>Linked List</h2>
-                <input type="checkbox" id="dtor" onchange="Generate()">Item has destructor <br>
-                <input type="checkbox" id="node" checked onchange="Generate()">Item is the list node<br>
-                <input type="checkbox" id="doubly" onchange="Generate()">doubly linked<br>
+                
+
+                <input id="type1" type="radio" checked="checked" name="radio" onchange="Generate()">
+                <label class="container">Singly linked list</label> <br>
+                 
+                <input id="type2" type="radio" name="radio" onchange="Generate()">
+                <label class="container">Double linked list</label> <br>
+           
+
+                <input type="checkbox" id="C23" onchange="Generate()">C23<br>
+                <input type="checkbox" id="comments" onchange="Generate()">Add comments<br>
+
+
             </th>
             <th style="text-align: left; vertical-align: top; padding-left: 20px;">
                 <pre id="output"></pre>
@@ -31,37 +41,27 @@
 #include <errno.h>
 
 struct book {
-@(DTOR)     char* title;
-@(!DTOR)     char title[10];
-@(!NODE)     struct book* next;
-@(!NODE DOUBLY)     struct book* prev;
+     char* title;
+     struct book* next;
+@(DOUBLY)     struct book* prev;
 };
-@(DTOR)
-@(DTOR) void book_destroy(struct book* book) {
-@(DTOR)     free(book->title);
-@(DTOR) }
-@(NODE) 
-@(NODE) struct book_list_node {
-@(NODE)    struct book book;
-@(NODE)    struct book_list_node* next;
-@(NODE) };
+
+void book_destroy(struct book* book) {
+@(REM)    /*remove if it is empty*/
+     free(book->title);
+ }
+ 
 
 struct books {
     struct book* head, *tail;
 };
 
-@(NODE)int books_push_back(struct books* books, struct book* new_book)
-@(!NODE)void books_push_back(struct books* books, struct book* new_book)
+void books_push_back(struct books* books, struct book* new_book)
 {
     assert(books != NULL);
     assert(new_book != NULL);
 @(DOUBLY)      assert(new_book->prev == NULL);
     assert(new_book->next == NULL);
-
-@(NODE)    struct book_list_node* node = calloc(1, sizeof * node);
-@(NODE)    if (node == NULL) return ENOMEM;
-@(NODE)    node->book = *new_book;
-
 
     if (books->tail == NULL) {
         books->head = new_book;
@@ -72,7 +72,6 @@ struct books {
         books->tail->next = new_book;
 @(DOUBLY)         books->tail = new_book;
     }
-@(NODE)   return 0;
 }
 
 void books_push_front(struct books* books, struct book* new_book)
@@ -101,7 +100,7 @@ void book_list_destroy(struct books* books)
     struct book* it = books->head;
     while (it != NULL) {
         struct book* next = it->next;
-@DTOR         book_destroy(it);
+        book_destroy(it);
         free(it);
         it = next;
     }
@@ -121,14 +120,13 @@ int main(int argc, char* argv[])
 
         function Generate() {
             var flags = "";
-            var bdtor = document.getElementById("dtor").checked;
-            if (bdtor) flags += " DTOR";
+            
+        
+            if (document.getElementById("type2").checked) flags += " DOUBLY";
 
-            var bnode = !document.getElementById("node").checked;
-            if (bnode) flags += " NODE";
-
-            var bdoubly = document.getElementById("doubly").checked;
-            if (bdoubly) flags += " DOUBLY";
+            if (document.getElementById("C23").checked) flags += " ATR";
+            if (document.getElementById("comments").checked) flags += " REM";
+           
 
             var out = preprocessor(list_source, flags);
             var html = hljs.highlight(out, { language: 'c' }).value;

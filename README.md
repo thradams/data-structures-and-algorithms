@@ -25,3 +25,15 @@ This ensures we have just one source. The generator reuses the same template for
 one sample that means we fix the template and then all samples are fixed.
 
 
+The generator is writen in javascript and use a preprocessor (see preprocessor.js)
+
+The preprocesso works like this
+
+```
+@(FLAG1 FLAG2 !FLAG3) line
+```
+
+When all flags are true then the line is inserted. A better generator (sugestion) is
+allow a expression FLAG1 || FLAG2 etc..
+
+

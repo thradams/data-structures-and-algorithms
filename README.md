@@ -19,21 +19,9 @@ A version (that may be outdated) is running here http://thradams.com/generator/d
 A this point samples will be created using a representative types for structs, strings,
 ints.  The programmer will have to replace the code for it's current type.
 
+The work (for now) will be directed to the generator (download and open html file) instead 
+of writing the sample on .md files.
+This ensures we have just one source. The generator reuses the same template for more than
+one sample that means we fix the template and then all samples are fixed.
 
-(Attention WORK IN PROGRESS)
-
-# Menu
-
-## Data structures
-
-* [Linked lists](linked_lists.md)
-* [Dynamic arrays](dynamic_arrays.md)
-* [Queue](queue.md)
-* [Hash maps](hashmaps.md)
-* 
-
-## Algoritms
-
-* Quick sort (TODO)
-* 
 

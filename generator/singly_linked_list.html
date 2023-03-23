@@ -12,18 +12,23 @@
         <tr>
             <th style="text-align: left; vertical-align: top; background-color: antiquewhite; padding-right: 20px;">
                 <h2>Linked List</h2>
-                
+
 
                 <input id="type1" type="radio" checked="checked" name="radio" onchange="Generate()">
                 <label class="container">Singly linked list</label> <br>
-                 
+
                 <input id="type2" type="radio" name="radio" onchange="Generate()">
                 <label class="container">Double linked list</label> <br>
-           
 
-                <input type="checkbox" id="C23" onchange="Generate()">C23<br>
+                <br />
+                <input type="checkbox" id="C23" onchange="Generate()">C23 attributes<br>
                 <input type="checkbox" id="comments" onchange="Generate()">Add comments<br>
 
+                <br />
+
+                <button onclick="navigator.clipboard.writeText(document.getElementById('output').innerText)">Copy to Clipboard</button>
+                <br />
+                <a href="dynamic_array.html">Dynamic Arrays</a>
 
             </th>
             <th style="text-align: left; vertical-align: top; padding-left: 20px;">
@@ -55,6 +60,66 @@ void book_destroy(struct book* book) {
 struct books {
     struct book* head, *tail;
 };
+
+void books_insert_after(struct books* books, struct book* book, struct book* new_book)
+{
+    assert(books != NULL);
+    assert(book != NULL);
+    assert(new_book != NULL);
+@(DOUBLY)    assert(new_book->prev == NULL);
+    assert(new_book->next == NULL);
+
+@(DOUBLY)    new_book->prev = book;
+
+    if (book->next == NULL) {
+        books->tail = new_book;
+    }
+    else {
+        new_book->next = book->next;
+@(DOUBLY)        book->next->prev = new_book;
+    }
+
+    book->next = new_book;
+}
+
+@(DOUBLY)void books_insert_before(struct books* books, struct book* book, struct book* new_book)
+@(DOUBLY){
+@(DOUBLY)    assert(books != NULL);
+@(DOUBLY)    assert(book != NULL);
+@(DOUBLY)    assert(new_book != NULL);
+@(DOUBLY)    assert(new_book->prev == NULL);
+@(DOUBLY)    assert(new_book->next == NULL);
+@(DOUBLY)
+@(DOUBLY)    new_book->next = book;
+@(DOUBLY)    if (book->prev == NULL) {
+@(DOUBLY)        books->head = new_book;
+@(DOUBLY)    }
+@(DOUBLY)    else {
+@(DOUBLY)        new_book->prev = book->prev;
+@(DOUBLY)        book->prev->next = new_book;
+@(DOUBLY)    }
+@(DOUBLY)    book->prev = new_book;
+@(DOUBLY)
+@(DOUBLY)}
+@(DOUBLY)void books_remove(struct books* books, struct book* book)
+@(DOUBLY){
+@(DOUBLY)    assert(books != NULL);
+@(DOUBLY)    assert(book != NULL);
+@(DOUBLY)
+@(DOUBLY)    if (book->prev == NULL)
+@(DOUBLY)        books->head = book->next;
+@(DOUBLY)    else
+@(DOUBLY)        book->prev->next = book->next;
+@(DOUBLY)
+@(DOUBLY)    if (book->next == NULL)
+@(DOUBLY)        books->tail = book->prev;
+@(DOUBLY)    else
+@(DOUBLY)        book->next->prev = book->prev;
+@(DOUBLY)    
+@(DOUBLY)    book_destroy(book);
+@(DOUBLY)    free(book);
+@(DOUBLY)}
+
 
 void books_push_back(struct books* books, struct book* new_book)
 {
@@ -92,7 +157,7 @@ void books_push_front(struct books* books, struct book* new_book)
     }
 }
 
-void book_list_destroy(struct books* books)
+void books_destroy(struct books* books)
 {
     //pre condition
     assert(books != NULL);
@@ -112,9 +177,9 @@ int main(int argc, char* argv[])
     struct book* b1 = calloc(1, sizeof(struct book));
     if (b1)
     {
-        book_list_append(&list, b1);
+        books_push_front(&list, b1);
     }
-    book_list_destroy(&list);
+    books_destroy(&list);
 }
 `;
 

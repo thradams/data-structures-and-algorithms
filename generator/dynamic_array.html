@@ -117,7 +117,12 @@
 {
         if (n > p->capacity) {
 
-            const size_t new_size_bytes = (size_t)n * sizeof(p->data[0]);
+            unsigned long long new_size_bytes = (unsigned long long) n * 
+                                                (unsigned long long) sizeof(p->data[0]);
+
+            if (new_size_bytes > SIZE_MAX)
+               return EOVERFLOW;
+
             void* pnew = realloc(p->data, new_size_bytes);
             if (pnew == NULL) return ENOMEM;
 
@@ -127,8 +132,6 @@
 
         return 0;
 }
-
-
 
 @(BASIC)int int_array_push_back(struct int_array* p, int value)
 @(MOVABLE ATR)[[nodiscard]]
@@ -144,7 +147,9 @@
 
         if (p->size + 1 > p->capacity) {
 
-            unsigned long long new_capacity = p->capacity + p->capacity / 2;
+            unsigned long long new_capacity = 
+                 (unsigned long long) p->capacity + 
+                 ((unsigned long long) p->capacity) / 2;
 
 
             if (new_capacity < p->size + 1) {

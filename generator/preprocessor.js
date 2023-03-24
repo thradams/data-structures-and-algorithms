@@ -1,53 +1,29 @@
 
-function preprocessor(text, flags) {
-
+function preprocessor(text) {
     var out = "";
     var lines = text.split("\n");
     for (var i = 0; i < lines.length; i++) {
         var line = lines[i];
+
         var k = 0;
         while (line.charAt(k) == " ") k++;
+
         if (line.charAt(k) == "@") {
             k++;
             k++;//@(
-
-            var allflagsfound = true;
+            var start = k;
             while (true) {
                 if (line.charAt(k) == ')') {
                     k++;
                     break;
                 }
-
-                while (line.charAt(k) == " ") k++;
-                var name = "";
-                while (
-                    (line.charCodeAt(k) >= "a".charCodeAt(0) && line.charCodeAt(k) <= "z".charCodeAt(0)) ||
-                    (line.charCodeAt(k) >= "A".charCodeAt(0) && line.charCodeAt(k) <= "Z".charCodeAt(0)) ||
-                    line.charAt(k) == "!" ||
-                    line.charAt(k) == "_") {
-                    name += line.charAt(k);
+                else
                     k++;
-                };
-
-                if (name.charAt(0) == "!") {
-                    if (flags.search(name.substring(1, name.length - 1)) >= 0) {
-                        allflagsfound = false;
-                        break;
-                    }
-                }
-                else {
-                    if (flags.search(name) >= 0) {
-                    }
-                    else {
-                        allflagsfound = false;
-                        break;
-                    }
-                }
-
-
-
             }
-            if (allflagsfound) {
+            var expression = line.substring(start, k - 1);
+            var result = eval(expression);
+
+            if (result) {
                 out += line.substring(k, line.length) + "\n";
             }
         }

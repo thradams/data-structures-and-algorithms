@@ -36,7 +36,8 @@
 
                 <br />
 
-                <button onclick="navigator.clipboard.writeText(document.getElementById('output').innerText)">Copy to Clipboard</button>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('output').innerText)">Copy to
+                    Clipboard</button>
                 <br />
                 <a href="linked_list.html">Linked lists</a><br />
                 <a href="queue.html">Queue</a> <br />
@@ -47,25 +48,25 @@
 
         </tr>
     </table>
-    
+
 
     <script>
         var list_source =
             `
-@(REM BASIC) /*
-@(REM BASIC)  *  Dynamic array of basic types like integers
-@(REM BASIC) */
+@(REM && BASIC) /*
+@(REM && BASIC)  *  Dynamic array of basic types like integers
+@(REM && BASIC) */
 
-@(REM COPIABLE) /*
-@(REM COPIABLE)  *  Dynamic array of copiable structs
-@(REM COPIABLE)  *  Copiable structs are structs where shallow is enoght
-@(REM COPIABLE) */
+@(REM && COPIABLE) /*
+@(REM && COPIABLE)  *  Dynamic array of copiable structs
+@(REM && COPIABLE)  *  Copiable structs are structs where shallow is enoght
+@(REM && COPIABLE) */
 
-@(REM MOVABLE) /*
-@(REM MOVABLE)  *  Dynamic array of movable structs
-@(REM MOVABLE)  *  Movable structs are structs where shallow is not enoght
-@(REM MOVABLE)  *  so we consider the inner data of the struct is moved
-@(REM MOVABLE) */
+@(REM && MOVABLE) /*
+@(REM && MOVABLE)  *  Dynamic array of movable structs
+@(REM && MOVABLE)  *  Movable structs are structs where shallow is not enoght
+@(REM && MOVABLE)  *  so we consider the inner data of the struct is moved
+@(REM && MOVABLE) */
 
 #include <stdlib.h>
 #include <assert.h>
@@ -74,23 +75,18 @@
 #include <limits.h>
 #include <string.h>
 
-@(MOVABLE)#ifdef _MSC_VER
-@(MOVABLE)#define strdup _strdup
-@(MOVABLE)#endif
-@(OWNERPTR)#ifdef _MSC_VER
-@(OWNERPTR)#define strdup _strdup
-@(OWNERPTR)#endif
+@(MOVABLE || OWNERPTR)#ifdef _MSC_VER
+@(MOVABLE || OWNERPTR)#define strdup _strdup
+@(MOVABLE || OWNERPTR)#endif
 
 @(!BASIC)struct book {
-@(COPIABLE)    char title[10];
-@(POINTER )    char title[10];
-@(OWNERPTR)    char* title;
-@(MOVABLE )    char* title;
+@(COPIABLE || POINTER)    char title[10];
+@(OWNERPTR || MOVABLE)    char* title;
 @(!BASIC)};
 
 @(MOVABLE)void book_destroy(struct book* book)
 @(MOVABLE){
-@(MOVABLE)    /*destroy must be able to ignore all zeroes book*/
+@(REM && MOVABLE)    /*destroy must be able to ignore all zeroes book*/
 @(MOVABLE)    free(book->title);
 @(MOVABLE)}
 
@@ -103,42 +99,37 @@
 
 @(BASIC)struct int_array {
 @(!BASIC)struct books {
-@(MOVABLE )    struct book* data;
-@(COPIABLE)    struct book* data;
-@(POINTER )    struct book** data;
-@(OWNERPTR)    struct book** data;
+@(MOVABLE || COPIABLE )    struct book* data;
+@(POINTER || OWNERPTR)    struct book** data;
 @(BASIC   )    int* data;
-        int size;
-        int capacity;
+    int size;
+    int capacity;
 };
 
 @(BASIC)int int_array_reserve(struct int_array* p, int n)
 @(!BASIC)int books_reserve(struct books* p, int n)
 {
         if (n > p->capacity) {
-
-            unsigned long long new_size_bytes = (unsigned long long) n * 
-                                                (unsigned long long) sizeof(p->data[0]);
-
-            if (new_size_bytes > SIZE_MAX)
+            
+            if ((size_t)n > (SIZE_MAX / (sizeof(p->data[0])))) {        
                return EOVERFLOW;
+            }
 
-            void* pnew = realloc(p->data, new_size_bytes);
+            void* pnew = realloc(p->data, n * sizeof(p->data[0]));
             if (pnew == NULL) return ENOMEM;
 
             p->data = pnew;
             p->capacity = n;
         }
-
         return 0;
 }
 
 @(BASIC)int int_array_push_back(struct int_array* p, int value)
-@(MOVABLE ATR)[[nodiscard]]
+@(MOVABLE && ATR)[[nodiscard]]
 @(MOVABLE)int books_push_back(struct books* p, struct book* book)
 @(COPIABLE)int books_push_back(struct books* p, const struct book* book)
 @(POINTER)int books_push_back(struct books* p, struct book* book)
-@(OWNERPTR ATR)[[nodiscard]]
+@(OWNERPTR && ATR)[[nodiscard]]
 @(OWNERPTR)int books_push_back(struct books* p, struct book* book)
 {
         if (p->size == INT_MAX) {
@@ -146,21 +137,23 @@
         }
 
         if (p->size + 1 > p->capacity) {
-
-            unsigned long long new_capacity = 
-                 (unsigned long long) p->capacity + 
-                 ((unsigned long long) p->capacity) / 2;
-
-
-            if (new_capacity < p->size + 1) {
-                new_capacity = p->size + 1;
+                
+            int new_capacity = 0;
+            if (p->capacity > (INT_MAX - p->capacity / 2))
+            {
+                /*overflow*/
+                new_capacity = INT_MAX; 
             }
-            else if (new_capacity > INT_MAX) {
-               new_capacity = INT_MAX;
+            else
+            {
+                new_capacity =  p->capacity + p->capacity / 2;
+                if (new_capacity < p->size + 1) {
+                    new_capacity = p->size + 1;
+                }
             }
 
-@(BASIC)        int error = int_array_reserve(p, (int)new_capacity);
-@(!BASIC)       int error = books_reserve(p, (int)new_capacity);
+@(BASIC)        int error = int_array_reserve(p, new_capacity);
+@(!BASIC)       int error = books_reserve(p, new_capacity);
             if (error != 0) {
                 return error;
             }
@@ -170,11 +163,11 @@
 @(COPIABLE)        p->data[p->size] = *book; /*COPIED*/
 @(MOVABLE )        p->data[p->size] = *book; /*MOVED*/
 
-@(REM     )       /*
-@(REM     )         after move (on success) the object book cannot be used 
-@(REM     )         anymore. But we can still call destroy on it (with no effect)
-@(REM     )         just for state simplification.
-@(REM     )       */
+@(REM && MOVABLE)       /*
+@(REM && MOVABLE)         after move (on success) the object book cannot be used 
+@(REM && MOVABLE)         anymore. But we can still call destroy on it (with no effect)
+@(REM && MOVABLE)         just for state simplification.
+@(REM && MOVABLE)       */
 @(MOVABLE )        memset(book, 0, sizeof(*book));
 
 @(OWNERPTR)    p->data[p->size] = book; /*MOVED*/
@@ -198,12 +191,9 @@
 @(BASIC   )    free(p->data);
 }
 
-@(OWNERPTR)#define try  if (1)
-@(OWNERPTR)#define throw goto CATCH
-@(OWNERPTR)#define catch else CATCH:
-@(MOVABLE)#define try  if (1)
-@(MOVABLE)#define throw goto CATCH
-@(MOVABLE)#define catch else CATCH:
+@(MOVABLE || OWNERPTR)#define try  if (1)
+@(MOVABLE || OWNERPTR)#define throw goto CATCH
+@(MOVABLE || OWNERPTR)#define catch else CATCH:
 
 int main()
 {
@@ -259,22 +249,25 @@ int main()
 }
 `;
 
-        function Generate()
-        {
-            var flags = "";
+        var BASIC = false;
+        var COPIABLE = false;
+        var MOVABLE = false;
+        var POINTER = false;
+        var OWNERPTR = false;
+        var ATR = false;
+        var REM = false;
 
+        function Generate() {
+            BASIC = document.getElementById("type1").checked;
+            COPIABLE = document.getElementById("type2").checked;
+            MOVABLE = document.getElementById("type3").checked;
+            POINTER = document.getElementById("type4").checked;
+            OWNERPTR = document.getElementById("type5").checked;
 
-            if (document.getElementById("type1").checked) flags += " BASIC";
-            if (document.getElementById("type2").checked) flags += " COPIABLE";
-            if (document.getElementById("type3").checked) flags += " MOVABLE ";
-            if (document.getElementById("type4").checked) flags += " POINTER";
-            if (document.getElementById("type5").checked) flags += " OWNERPTR ";
+            ATR = document.getElementById("C23").checked;
+            REM = document.getElementById("comments").checked;
 
-            if (document.getElementById("C23").checked) flags += " ATR";
-            if (document.getElementById("comments").checked) flags += " REM";
-
-
-            var out = preprocessor(list_source, flags);
+            var out = preprocessor(list_source);
             var html = hljs.highlight(out, { language: 'c' }).value;
             document.getElementById("output").innerHTML = html;
         }

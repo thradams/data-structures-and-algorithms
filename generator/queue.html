@@ -27,7 +27,8 @@
 
                 <br />
 
-                <button onclick="navigator.clipboard.writeText(document.getElementById('output').innerText)">Copy to Clipboard</button>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('output').innerText)">Copy to
+                    Clipboard</button>
                 <br />
                 <br />
                 <a href="dynamic_array.html">Dynamic Arrays</a> <br />
@@ -42,7 +43,7 @@
 
     <script>
         var list_source =
-            `
+ `
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -153,18 +154,17 @@ int main()
     queue_destroy(&queue);
 }
 `;
+        //FLAGS
+        var REMOVEOLDEST = false;
+        var ATR = false;
+        var REM = false;
 
         function Generate() {
-            var flags = "";
-            
-        
-            if (document.getElementById("type1").checked) flags += " REMOVEOLDEST";
 
-            if (document.getElementById("C23").checked) flags += " ATR";
-            if (document.getElementById("comments").checked) flags += " REM";
-           
-
-            var out = preprocessor(list_source, flags);
+            REMOVEOLDEST = document.getElementById("type1").checked;
+            ATR = document.getElementById("C23").checked;
+            REM = document.getElementById("comments").checked;
+            var out = preprocessor(list_source);
             var html = hljs.highlight(out, { language: 'c' }).value;
             document.getElementById("output").innerHTML = html;
         }

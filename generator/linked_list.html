@@ -27,7 +27,8 @@
 
                 <br />
 
-                <button onclick="navigator.clipboard.writeText(document.getElementById('output').innerText)">Copy to Clipboard</button>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('output').innerText)">Copy to
+                    Clipboard</button>
                 <br />
                 <a href="dynamic_array.html">Dynamic Arrays</a> <br />
                 <a href="queue.html">Queue</a> <br />
@@ -184,18 +185,15 @@ int main(int argc, char* argv[])
     books_destroy(&list);
 }
 `;
-
+        //flags
+        var DOUBLY = false;
+        var ATR = false;
+        var REM = false;
         function Generate() {
-            var flags = "";
-            
-        
-            if (document.getElementById("type2").checked) flags += " DOUBLY";
-
-            if (document.getElementById("C23").checked) flags += " ATR";
-            if (document.getElementById("comments").checked) flags += " REM";
-           
-
-            var out = preprocessor(list_source, flags);
+            DOUBLY = document.getElementById("type2").checked;
+            ATR = document.getElementById("C23").checked;
+            REM = document.getElementById("comments").checked;
+            var out = preprocessor(list_source);
             var html = hljs.highlight(out, { language: 'c' }).value;
             document.getElementById("output").innerHTML = html;
         }

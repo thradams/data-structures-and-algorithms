@@ -44,46 +44,46 @@
         var list_source =
             `
 
-#include <stdlib.h>
-#include <assert.h>
-#include <errno.h>
+@(      )#include <stdlib.h>
+@(      )#include <assert.h>
+@(      )#include <errno.h>
 
-struct book {
-     char* title;
-     struct book* next;
+@(      )struct book {
+@(      )     char* title;
+@(      )     struct book* next;
 @(DOUBLY)     struct book* prev;
-};
+@(      )};
 
-void book_destroy(struct book* book) {
-@(REM)    /*remove if it is empty*/
-     free(book->title);
- }
+@(      )void book_destroy(struct book* book) {
+@(REM   )    /*remove if it is empty*/
+@(      )     free(book->title);
+@(      )}
  
 
-struct books {
-    struct book* head, *tail;
-};
+@(      )struct books {
+@(      )    struct book* head, *tail;
+@(      )};
 
-void books_insert_after(struct books* books, struct book* book, struct book* new_book)
-{
-    assert(books != NULL);
-    assert(book != NULL);
-    assert(new_book != NULL);
+@(      )void books_insert_after(struct books* books, struct book* book, struct book* new_book)
+@(      ){
+@(      )    assert(books != NULL);
+@(      )    assert(book != NULL);
+@(      )    assert(new_book != NULL);
 @(DOUBLY)    assert(new_book->prev == NULL);
-    assert(new_book->next == NULL);
-
+@(      )    assert(new_book->next == NULL);
+@(      )
 @(DOUBLY)    new_book->prev = book;
-
-    if (book->next == NULL) {
-        books->tail = new_book;
-    }
-    else {
-        new_book->next = book->next;
+@(      )
+@(      )    if (book->next == NULL) {
+@(      )        books->tail = new_book;
+@(      )    }
+@(      )    else {
+@(      )        new_book->next = book->next;
 @(DOUBLY)        book->next->prev = new_book;
-    }
-
-    book->next = new_book;
-}
+@(      )    }
+@(      )
+@(      )    book->next = new_book;
+@(      )}
 
 @(DOUBLY)void books_insert_before(struct books* books, struct book* book, struct book* new_book)
 @(DOUBLY){
@@ -124,55 +124,53 @@ void books_insert_after(struct books* books, struct book* book, struct book* new
 @(DOUBLY)}
 
 
-void books_push_back(struct books* books, struct book* new_book)
-{
-    assert(books != NULL);
-    assert(new_book != NULL);
-@(DOUBLY)      assert(new_book->prev == NULL);
-    assert(new_book->next == NULL);
+@(      )void books_push_back(struct books* books, struct book* new_book)
+@(      ){
+@(      )   assert(books != NULL);
+@(      )   assert(new_book != NULL);
+@(DOUBLY)   assert(new_book->prev == NULL);
+@(      )   assert(new_book->next == NULL);
+@(      )
+@(      )   if (books->tail == NULL) {
+@(      )      books->head = new_book;
+@(      )   }
+@(      )   else {
+@(DOUBLY)      new_book->prev = books->tail;        
+@(      )      books->tail->next = new_book;
+@(      )   }
+@(      )   books->tail = new_book;
+@(      )}
 
-    if (books->tail == NULL) {
-        books->head = new_book;
-@(DOUBLY)         books->tail = new_book;
-    }
-    else {
-@(DOUBLY)         new_book->prev = books->tail;        
-        books->tail->next = new_book;
-@(DOUBLY)         books->tail = new_book;
-    }
-}
-
-void books_push_front(struct books* books, struct book* new_book)
-{
-    assert(books != NULL);
-    assert(new_book != NULL);
+@(      )void books_push_front(struct books* books, struct book* new_book)
+@(      ){
+@(      )    assert(books != NULL);
+@(      )    assert(new_book != NULL);
 @(DOUBLY)     assert(new_book->prev == NULL);
-    assert(new_book->next == NULL);
-
-    if (books->head == NULL) {
-        books->head = new_book;
-        books->tail = new_book;
-    }
-    else {
-        new_book->next = books->head;        
+@(      )    assert(new_book->next == NULL);
+@(      )
+@(      )    if (books->head == NULL) {
+@(      )        books->tail = new_book;
+@(      )    }
+@(      )    else {
+@(      )        new_book->next = books->head;        
 @(DOUBLY)        books->head->prev = new_book;
-        books->head = new_book;
-    }
-}
+@(      )    }
+@(      )    books->head = new_book;
+@(      )}
 
-void books_destroy(struct books* books)
-{
-    //pre condition
-    assert(books != NULL);
-
-    struct book* it = books->head;
-    while (it != NULL) {
-        struct book* next = it->next;
-        book_destroy(it);
-        free(it);
-        it = next;
-    }
-}
+@(      )void books_destroy(struct books* books)
+@(      ){
+@(      )    //pre condition
+@(      )    assert(books != NULL);
+@(      )
+@(      )    struct book* it = books->head;
+@(      )    while (it != NULL) {
+@(      )        struct book* next = it->next;
+@(      )        book_destroy(it);
+@(      )        free(it);
+@(      )        it = next;
+@(      )    }
+@(      )}
 
 int main(int argc, char* argv[])
 {
